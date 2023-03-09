@@ -12,7 +12,7 @@ app.get('/',(req:Request, res:Response) => {
     res.send("Welcome to Barefoot Nomad APIs")
 })
 
-app.listen(PORT, () => {
+app.listen(PdsdORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
