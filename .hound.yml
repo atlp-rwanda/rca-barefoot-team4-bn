@@ -1,0 +1,9 @@
+# .hound.yml
+
+javascript:
+  ignore_file: .houndignore
+
+typescript:
+  config_file: tsconfig.json
+  ignore_file: .houndignore
+
