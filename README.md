@@ -11,6 +11,5 @@
 Doing this will ensure that the code is more readable, organized and avoiding problematic code patterns.
 
 # husky
-  * `prettier`: drastically improves team consistency by automatically formatting the code
   * `husky` : will ensure that before committing any work to the project, the code are well linted. This will help to avoid failures in CI builds beforehand.  
  
