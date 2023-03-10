@@ -1,4 +1,4 @@
-import { registerSchema, registerSchemas } from 'swaggiffy';
+// import { registerSchema } from "swaggiffy";
 
 // registerSchema('Model Name', modelObj)
 
