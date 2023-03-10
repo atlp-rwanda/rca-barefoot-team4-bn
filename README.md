@@ -14,6 +14,6 @@ Doing this will ensure that the code is more readable, organized and avoiding pr
 <<<<<<< HEAD
   * `prettier`: drastically improves team consistency by automatically formatting the code
 =======
->>>>>>> fd0445b1b0772b536b3d84e7e142d84df921848f
+>>>>>>> fc9e4c836e0bb04b0bf53e73daa90c6d2b33b146
   * `husky` : will ensure that before committing any work to the project, the code are well linted. This will help to avoid failures in CI builds beforehand.  
  
