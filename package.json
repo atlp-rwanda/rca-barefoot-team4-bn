@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc && node dist/app.js",
-    "dev": "nodemon",
+    "dev": "nodemon --ignore '*swagger.json'",
     "lint": "eslint . --config .eslintrc.json",
     "lint:fix": "eslint . --fix --config .eslintrc.json",
     "build": "tsc",
@@ -25,7 +25,8 @@
     "husky": "^8.0.3",
     "mocha": "^10.2.0",
     "prettier": "^2.8.4",
-    "prisma": "^4.11.0"
+    "prisma": "^4.11.0",
+    "swaggiffy": "^1.0.5"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
