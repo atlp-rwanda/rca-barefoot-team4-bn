@@ -12,9 +12,11 @@
     "lint:fix": "eslint . --fix --config .eslintrc.json",
     "build": "tsc",
     "clean": "rm -rf dist",
-    "test": "mocha --require ts-node/register 'tests/**/*.test.ts'"
+    "test": "mocha --require ts-node/register 'tests/**/*.test.ts'",
+    "postinstall": "npx prisma generate && npx prisma migrate dev"
   },
   "dependencies": {
+    "@prisma/client": "4.11.0",
     "all": "^0.0.0",
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
