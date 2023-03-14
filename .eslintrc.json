@@ -10,7 +10,8 @@
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
+    "extraFileExtensions": [".ts"]
   },
   "rules": {
     "prettier/prettier": ["error"]
