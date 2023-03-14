@@ -11,8 +11,7 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "test": "mocha --require ts-node/register 'test/**/*.test.ts'",
-    "coverage": "nyc --reporter=lcov --reporter=text npm test",
-  "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coverage": "nyc --reporter=lcov --reporter=text npm test"
   },
   "dependencies": {
     "@types/chai": "^4.3.4",
