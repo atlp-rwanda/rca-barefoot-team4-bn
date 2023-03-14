@@ -6,3 +6,4 @@ javascript:
 typescript:
   config_file: tsconfig.json
   ignore_file: .houndignore
+
