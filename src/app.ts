@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 import express, { type Request, type Response } from "express";
 import bodyParser from "body-parser";
 import swaggerUi, { type SwaggerUiOptions } from "swagger-ui-express";
@@ -39,7 +39,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api-docs", swaggerUi.serve);
 app.get("/api-docs", swaggerUi.setup(swaggerDefinition, options));
 
-if(process.env.NODE_ENV!='test'){
+if (process.env.NODE_ENV != "test") {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
