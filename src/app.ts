@@ -1,10 +1,10 @@
 import express, { type Request, type Response } from "express";
 import bodyParser from "body-parser";
 import swaggerUi, { type SwaggerUiOptions } from "swagger-ui-express";
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 
 const app = express();
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -35,10 +35,12 @@ const options: SwaggerUiOptions = {
 };
 
 app.get("/", (req: Request, res: Response) => {
-  prisma.user
-    .findMany()
-    .then((users) => res.send(users))
-    .catch((err) => res.status(500).send(err));
+  // prisma.user
+  //   .findMany()
+  //   .then((users) => res.send(users))
+  //   .catch((err) => res.status(500).send(err));
+
+  res.send("Welcome to Barefoot Nomad APIs");
 });
 
 app.use("/api-docs", swaggerUi.serve);
