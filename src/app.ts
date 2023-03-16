@@ -1,7 +1,10 @@
 import express, { type Request, type Response } from "express";
 import bodyParser from "body-parser";
 import swaggerUi, { type SwaggerUiOptions } from "swagger-ui-express";
+import { PrismaClient } from "@prisma/client";
+
 const app = express();
+const prisma = new PrismaClient();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -32,7 +35,10 @@ const options: SwaggerUiOptions = {
 };
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Barefoot Nomad APIs");
+  prisma.user
+    .findMany()
+    .then((users) => res.send(users))
+    .catch((err) => res.status(500).send(err));
 });
 
 app.use("/api-docs", swaggerUi.serve);
@@ -40,6 +46,14 @@ app.get("/api-docs", swaggerUi.setup(swaggerDefinition, options));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+
+  prisma.$queryRaw`SELECT * FROM User`
+    .then((n) => {
+      console.log("\nCONNECTED TO DATABASE\n");
+    })
+    .catch((err) => {
+      console.log("FAILED TO CONNECT TO DB", err);
+    });
 });
 
 export default app;

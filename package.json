@@ -12,7 +12,8 @@
     "lint:fix": "eslint . --fix --config .eslintrc.json",
     "build": "tsc",
     "clean": "rm -rf dist",
-    "test": "nyc --reporter=text mocha --exit --require ts-node/register 'tests/**/*.test.ts'"
+    "test": "nyc --reporter=text mocha --exit --require ts-node/register 'tests/**/*.test.ts'",
+    "postinstall": "npx prisma generate && npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "4.11.0",
