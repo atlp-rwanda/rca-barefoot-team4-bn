@@ -391,6 +391,18 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@prisma/client@4.11.0":
+  version "4.11.0"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-4.11.0.tgz#41d5664dea4172c954190a432f70b86d3e2e629b"
+  integrity sha512-0INHYkQIqgAjrt7NzhYpeDQi8x3Nvylc2uDngKyFDDj1tTRQ4uV1HnVmd1sQEraeVAN63SOK0dgCKQHlvjL0KA==
+  dependencies:
+    "@prisma/engines-version" "4.11.0-57.8fde8fef4033376662cad983758335009d522acb"
+
+"@prisma/engines-version@4.11.0-57.8fde8fef4033376662cad983758335009d522acb":
+  version "4.11.0-57.8fde8fef4033376662cad983758335009d522acb"
+  resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-4.11.0-57.8fde8fef4033376662cad983758335009d522acb.tgz#74af5ff56170c78e93ce46c56510160f58cd3c01"
+  integrity sha512-3Vd8Qq06d5xD8Ch5WauWcUUrsVPdMC6Ge8ILji8RFfyhUpqon6qSyGM0apvr1O8n8qH8cKkEFqRPsYjuz5r83g==
+
 "@prisma/engines@4.11.0":
   version "4.11.0"
   resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-4.11.0.tgz#c99749bfe20f58e8f4d2b5e04fee0785eba440e1"
@@ -1761,9 +1773,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.284:
-  version "1.4.330"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.330.tgz#4740378db7160d7210afb29800c74048cdf10a99"
-  integrity sha512-PqyefhybrVdjAJ45HaPLtuVaehiSw7C3ya0aad+rvmV53IVyXmYRk3pwIOb2TxTDTnmgQdn46NjMMaysx79/6Q==
+  version "1.4.332"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.332.tgz#b981fcf61587abe03c24b301b2cfbdcc2b70e8a5"
+  integrity sha512-c1Vbv5tuUlBFp0mb3mCIjw+REEsgthRgNE8BlbEDKmvzb8rxjcVki6OkQP83vLN34s0XCxpSkq7AZNep1a6xhw==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -4530,9 +4542,9 @@ supports-preserve-symlinks-flag@^1.0.0:
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
 swagger-client@^3.19.1:
-  version "3.19.1"
-  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.19.1.tgz#e4e46338eaa4ef7226c8b70d188ccc0cee3a094c"
-  integrity sha512-PO+ttw+PGA8umvyli4ljSlmN7Jkzao74TPvrbXoRAGW3UChb3w18fmJKebLGeo2DDebYyrQ8ycPobyNP40b7BQ==
+  version "3.19.2"
+  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.19.2.tgz#7fabea7d953c19532670f3ee983a61addb134304"
+  integrity sha512-oBR6VtD99yJOY8W3vf1h8zU91H5UpwUk2trSL4xzZIzChWtlaOMyWh+/GyUGgDCmQY4B1E4qTgAD/kFQ4dFnnA==
   dependencies:
     "@babel/runtime-corejs3" "^7.20.13"
     "@swagger-api/apidom-core" "=0.69.0"
