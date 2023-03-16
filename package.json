@@ -13,6 +13,7 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "test": "nyc --reporter=text mocha --exit --require ts-node/register 'tests/**/*.test.ts'",
+    "coverage": "nyc --reporter=lcov --reporter=text npm test",
     "postinstall": "npx prisma generate",
     "migrate": "npx prisma migrate dev"
   },
