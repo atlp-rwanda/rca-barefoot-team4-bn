@@ -1,3 +1,4 @@
+[![.github/workflows/main.yml](https://github.com/atlp-rwanda/rca-barefoot-team4-bn/actions/workflows/main.yml/badge.svg)](https://github.com/atlp-rwanda/rca-barefoot-team4-bn/actions/workflows/main.yml)
 ## rca-barefoot-team2-bn
 
 # Linting and formatting commands
@@ -11,5 +12,6 @@
 Doing this will ensure that the code is more readable, organized and avoiding problematic code patterns.
 
 # husky
+  * `prettier`: drastically improves team consistency by automatically formatting the code
   * `husky` : will ensure that before committing any work to the project, the code are well linted. This will help to avoid failures in CI builds beforehand.  
  

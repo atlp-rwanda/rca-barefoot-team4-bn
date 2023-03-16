@@ -273,8 +273,10 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
+.yarn/
 node_modules/
 dist/
+.nyc_output/
 .env
 
 # Visual Studio 6 build log
