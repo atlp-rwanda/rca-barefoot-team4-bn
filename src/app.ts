@@ -47,13 +47,13 @@ app.get("/api-docs", swaggerUi.setup(swaggerDefinition, options));
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 
-  prisma.$queryRaw`SELECT * FROM User`
-    .then((n) => {
-      console.log("\nCONNECTED TO DATABASE\n");
-    })
-    .catch((err) => {
-      console.log("FAILED TO CONNECT TO DB", err);
-    });
+  // prisma.$queryRaw`SELECT * FROM User`
+  //   .then((n) => {
+  //     console.log("\nCONNECTED TO DATABASE\n");
+  //   })
+  //   .catch((err) => {
+  //     console.log("FAILED TO CONNECT TO DB", err);
+  //   });
 });
 
 export default app;
