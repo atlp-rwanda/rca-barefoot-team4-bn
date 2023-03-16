@@ -15,7 +15,8 @@
     "test": "nyc --reporter=text mocha --exit --require ts-node/register 'tests/**/*.test.ts'",
     "coverage": "nyc --reporter=lcov --reporter=text npm test",
     "postinstall": "npx prisma generate",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "npx prisma migrate dev",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "@prisma/client": "4.11.0",
@@ -49,6 +50,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
+    "coveralls": "^3.1.1",
     "nodemon": "^2.0.21",
     "nyc": "^15.1.0",
     "ts-node": "^10.9.1",
