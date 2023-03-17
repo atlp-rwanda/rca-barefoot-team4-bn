@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"processes":{"34a9be65-a0f7-409b-9c72-636e81a30786":{"parent":null,"children":["dc2a175c-2bc2-4763-9ac9-37edaf802603"]},"dc2a175c-2bc2-4763-9ac9-37edaf802603":{"parent":"34a9be65-a0f7-409b-9c72-636e81a30786","children":[]}},"files":{"/Users/danieldukundane/Documents/Andela/rca-barefoot-team4-bn/src/app.ts":["dc2a175c-2bc2-4763-9ac9-37edaf802603"]},"externalIds":{}}
+=======
+{"processes":{"5349179d-4f19-4ccb-b0c9-c984c3448b14":{"parent":"654545e9-0957-48f1-bac7-1171eafddc18","children":[]},"654545e9-0957-48f1-bac7-1171eafddc18":{"parent":null,"children":["5349179d-4f19-4ccb-b0c9-c984c3448b14"]}},"files":{"/Users/danieldukundane/Documents/Andela/rca-barefoot-team4-bn/src/app.ts":["5349179d-4f19-4ccb-b0c9-c984c3448b14"]},"externalIds":{}}
+>>>>>>> 3007fe1 (ch: integrate-coveralls-coverage-services)
