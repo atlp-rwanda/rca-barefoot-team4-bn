@@ -3,7 +3,7 @@
 
 generator client {
   provider   = "prisma-client-js"
-  engineType = "binary"
+  // engineType = "binary"
 }
 
 datasource db {
@@ -14,7 +14,25 @@ datasource db {
 // Define the models down below
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id        String @id @default(uuid())
+  email     String @unique
+  password  String
+  firstName String
+  lastName  String
+  role      Role   @default(USER)
+
+  photo  String? @default("default.png")
+  // social Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // other fields should be added as the project grows
+  @@index([email])
+  @@map(name: "users")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
