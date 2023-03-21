@@ -4,6 +4,11 @@ import bodyParser from "body-parser";
 import swaggerUi, { type SwaggerUiOptions } from "swagger-ui-express";
 // import { PrismaClient } from "@prisma/client";
 
+import authRouter from "./routes/auth.routes";
+import validateEnv from "./utils/validateEnv";
+
+validateEnv();
+
 const app = express();
 // const prisma = new PrismaClient();
 
@@ -46,6 +51,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api-docs", swaggerUi.serve);
 app.get("/api-docs", swaggerUi.setup(swaggerDefinition, options));
+app.use("/api/v1/auth", authRouter);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
