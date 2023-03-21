@@ -15,7 +15,6 @@ import {
   signTokens,
   deleteUsers,
 } from "../services/user.service";
-import { signJwt, verifyJwt } from "../utils/jwt";
 
 const cookiesOtions: CookieOptions = {
   httpOnly: true,
@@ -48,8 +47,6 @@ export const registerUserHandler = async (
 
     const { firstName, lastName, email } = req.body;
 
-    console.log("creating");
-
     const user = await registerUser({
       firstName,
       lastName,
@@ -57,24 +54,21 @@ export const registerUserHandler = async (
       password: hashedPassword,
     });
 
-    if (!user) {
-      console.log("impossibility");
-    }
+    const { access_token, refresh_token } = await signTokens(user);
+    res.cookie("access_token", access_token, accessTokenCookieOptions);
+    res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
+    res.cookie("logged_in", true, {
+      ...accessTokenCookieOptions,
+      httpOnly: false,
+    });
 
-    // const { access_token, refresh_token } = await signTokens(user);
-    // res.cookie("access_token", access_token, accessTokenCookieOptions);
-    // res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
-    // res.cookie("logged_in", true, {
-    //   ...accessTokenCookieOptions,
-    //   httpOnly: false,
-    // });
+    // const access_token = signToken(user.id);
 
     res.status(201).json({
       status: "success",
       data: {
         user,
-        // access_token,
-        // refresh_token,
+        access_token,
       },
     });
   } catch (err: any) {

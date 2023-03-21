@@ -34,6 +34,7 @@ export const signTokens = async (user: Prisma.UserCreateInput) => {
   // });
 
   // 2. Create Access and Refresh tokens
+  
   const access_token = signJwt({ id: user.id }, "accessTokenPrivateKey", {
     expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
   });

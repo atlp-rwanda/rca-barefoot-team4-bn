@@ -7,11 +7,7 @@ export const signJwt = (
   options: SignOptions
 ) => {
   try {
-    const privateKey = Buffer.from(
-      config.get<string>(keyName),
-      "base64"
-    ).toString("ascii");
-    return jwt.sign(payload, privateKey, {
+    return jwt.sign(payload, config.get<string>("accessTokenPrivateKey"), {
       ...options,
     });
   } catch (error) {
@@ -23,12 +19,8 @@ export const verifyJwt = <T>(
   token: string,
   keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"
 ): T | null => {
-  try {
-    const publicKey = Buffer.from(
-      config.get<string>(keyName),
-      "base64"
-    ).toString("ascii");
-    const decoded = jwt.verify(token, publicKey) as T;
+  try {    
+    const decoded = jwt.verify(token, config.get<string>("accessTokenPrivateKey")) as T;
 
     return decoded;
   } catch (error) {
