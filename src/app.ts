@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express, { type Request, type Response } from "express";
 import bodyParser from "body-parser";
-import config from "config";
 import swaggerUi, { type SwaggerUiOptions } from "swagger-ui-express";
 // import { PrismaClient } from "@prisma/client";
 

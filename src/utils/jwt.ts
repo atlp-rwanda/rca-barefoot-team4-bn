@@ -19,8 +19,11 @@ export const verifyJwt = <T>(
   token: string,
   keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"
 ): T | null => {
-  try {    
-    const decoded = jwt.verify(token, config.get<string>("accessTokenPrivateKey")) as T;
+  try {
+    const decoded = jwt.verify(
+      token,
+      config.get<string>("accessTokenPrivateKey")
+    ) as T;
 
     return decoded;
   } catch (error) {

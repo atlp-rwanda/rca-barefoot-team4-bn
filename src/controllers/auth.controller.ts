@@ -84,12 +84,50 @@ export const registerUserHandler = async (
   }
 };
 
-export const deleteHandler = async (
-  req: Request<{}, {}>,
+// LOGIN HANDLER
+export const loginHandler = async (
+  req: Request<{}, {}, LoginUserInput>,
   res: Response,
   next: NextFunction
 ) => {
-  deleteUsers();
+  try {
+    const { email, password } = req.body;
+
+    const user = await findUniqueUser(
+      { email: email.toLowerCase() },
+      { id: true, firstName: true, lastName: true, email: true, password: true }
+    );
+
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      next(new Error("Invalid email or password"));
+      return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { access_token, refresh_token } = await signTokens(user);
+    res.cookie("access_token", access_token, accessTokenCookieOptions);
+    res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
+    res.cookie("logged_in", true, {
+      ...accessTokenCookieOptions,
+      httpOnly: false,
+    });
+
+    res.status(200).json({
+      status: "success",
+      access_token,
+    });
+  } catch (error: any) {
+    next(error);
+  }
+};
+
+export const deleteHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  await deleteUsers();
 
   res.status(200).send("Done!");
 };
