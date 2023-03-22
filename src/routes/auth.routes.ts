@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  deleteHandler,
+  deleteUsersHandler,
   loginHandler,
   registerUserHandler,
 } from "../controllers/auth.controller";
@@ -11,6 +11,6 @@ const router = express.Router();
 
 router.post("/register", validate(registerUserSchema), registerUserHandler);
 router.post("/login", validate(loginUserSchema), loginHandler);
-router.delete("/", deleteHandler);
+router.delete("/", deleteUsersHandler);
 
 export default router;

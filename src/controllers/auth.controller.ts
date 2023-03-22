@@ -122,14 +122,14 @@ export const loginHandler = async (
   }
 };
 
-export const deleteHandler = async (
+export const deleteUsersHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   await deleteUsers();
 
-  res.status(200).send("Done!");
+  res.status(200).json({ message: "Done!" });
 };
 
 // Login handler here

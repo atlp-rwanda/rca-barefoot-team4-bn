@@ -5,6 +5,7 @@ import app from "../src/app";
 chai.use(chaiHttp);
 const expect = chai.expect;
 
+
 describe("GET /", () => {
   it('should return "Welcome to Barefoot Nomad APIs"', (done) => {
     chai
