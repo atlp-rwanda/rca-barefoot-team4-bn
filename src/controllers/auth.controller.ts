@@ -8,13 +8,17 @@ import {
 import config from "config";
 import bcrypt from "bcryptjs";
 
-import { LoginUserInput, type RegisterUserInput } from "../models/user.model";
+import {
+  type LoginUserInput,
+  type RegisterUserInput,
+} from "../models/user.model";
 import {
   registerUser,
   findUniqueUser,
   signTokens,
   deleteUsers,
 } from "../services/user.service";
+import { validateUserInput } from "../utils/validation/validate.user";
 
 const cookiesOtions: CookieOptions = {
   httpOnly: true,
@@ -43,6 +47,13 @@ export const registerUserHandler = async (
   next: NextFunction
 ) => {
   try {
+    // validate request body
+    const { error } = validateUserInput(req.body);
+    if (error != null)
+      return res.status(400).send({
+        status: "fail",
+        message: error.details[0].message,
+      });
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     const { firstName, lastName, email } = req.body;
@@ -54,9 +65,9 @@ export const registerUserHandler = async (
       password: hashedPassword,
     });
 
-    const { access_token, refresh_token } = await signTokens(user);
-    res.cookie("access_token", access_token, accessTokenCookieOptions);
-    res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
+    const { accessToken, refreshToken } = signTokens(user);
+    res.cookie("access_token", accessToken, accessTokenCookieOptions);
+    res.cookie("refresh_token", refreshToken, refreshTokenCookieOptions);
     res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
       httpOnly: false,
@@ -68,7 +79,7 @@ export const registerUserHandler = async (
       status: "success",
       data: {
         user,
-        access_token,
+        access_token: accessToken,
       },
     });
   } catch (err: any) {
@@ -105,9 +116,9 @@ export const loginHandler = async (
     }
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { access_token, refresh_token } = await signTokens(user);
-    res.cookie("access_token", access_token, accessTokenCookieOptions);
-    res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
+    const { accessToken, refreshToken } = signTokens(user);
+    res.cookie("access_token", accessToken, accessTokenCookieOptions);
+    res.cookie("refresh_token", refreshToken, refreshTokenCookieOptions);
     res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
       httpOnly: false,
@@ -115,7 +126,7 @@ export const loginHandler = async (
 
     res.status(200).json({
       status: "success",
-      access_token,
+      accessToken,
     });
   } catch (error: any) {
     next(error);
