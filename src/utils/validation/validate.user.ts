@@ -7,7 +7,7 @@ export function validateUserInput(body: object): Joi.ValidationResult<any> {
     password: Joi.string().min(6).required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
-    role: Joi.string().valid("admin", "user"),
+    role: Joi.string().valid("USER", "ADMIN"),
     photo: Joi.string().allow(null),
   });
   return schema.validate(body);
