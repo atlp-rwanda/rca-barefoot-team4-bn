@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  // engineType = "binary"
 }
 
 datasource db {
@@ -10,5 +11,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 // Define the models down below
+
+model User {
+  id        String @id @default(uuid())
+  email     String @unique
+  password  String
+  firstName String
+  lastName  String
+  role      Role   @default(USER)
+
+  photo  String? @default("default.png")
+  // social Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // other fields should be added as the project grows
+  @@index([email])
+  @@map(name: "users")
+}
+
+enum Role {
+  USER
+  ADMIN
+}

@@ -276,6 +276,8 @@ FakesAssemblies/
 .yarn/
 node_modules/
 dist/
+.nyc_output/
+.env
 
 # Visual Studio 6 build log
 *.plg

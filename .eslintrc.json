@@ -11,7 +11,7 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "project": "./tsconfig.json"
-  },
+    },
   "rules": {
     "prettier/prettier": ["error"]
   }
