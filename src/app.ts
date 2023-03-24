@@ -6,6 +6,7 @@ import swaggerUi, { type SwaggerUiOptions } from "swagger-ui-express";
 
 import authRouter from "./routes/auth.routes";
 import validateEnv from "./utils/validateEnv";
+import  sendEmailRoute  from "./routes/sendEmail.routes";
 
 validateEnv();
 
@@ -52,6 +53,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api-docs", swaggerUi.serve);
 app.get("/api-docs", swaggerUi.setup(swaggerDefinition, options));
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/sendEmail", sendEmailRoute);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
