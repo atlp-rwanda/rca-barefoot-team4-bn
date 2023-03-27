@@ -50,3 +50,27 @@ export const deleteUsers = async () => {
   console.log("deleting...");
   await prisma.user.deleteMany();
 };
+
+export const deleteToken =async (token:string) => {
+  await prisma.token.delete({
+    where:{
+      token_value:token
+    }
+  })
+}
+
+export const checkTokenExist =async (token:string) => {
+  return await prisma.token.findFirst({
+    where:{
+      token_value:token
+    }
+  })
+}
+
+export const getOne =async (id:string) => {
+  return await prisma.user.findFirst({
+    where:{
+      id
+    }
+  })
+}

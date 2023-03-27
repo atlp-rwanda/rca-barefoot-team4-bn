@@ -14,6 +14,7 @@ import {
   findUniqueUser,
   signTokens,
   deleteUsers,
+  deleteToken,
 } from "../services/user.service";
 
 const cookiesOtions: CookieOptions = {
@@ -133,3 +134,14 @@ export const deleteHandler = async (
 };
 
 // Login handler here
+
+
+export const logout = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const token = req.headers.token as string
+  await deleteToken(token); //To do: waiting for middleware protection to get token
+
+  res.status(200).send("Done!");
+};
