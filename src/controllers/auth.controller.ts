@@ -8,7 +8,10 @@ import {
 import config from "config";
 import bcrypt from "bcryptjs";
 
-import { LoginUserInput, type RegisterUserInput } from "../models/user.model";
+import {
+  type LoginUserInput,
+  type RegisterUserInput,
+} from "../models/user.model";
 import {
   registerUser,
   findUniqueUser,
