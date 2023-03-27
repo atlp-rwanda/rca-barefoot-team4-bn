@@ -1,7 +1,8 @@
 import "dotenv/config";
 import express, { type Request, type Response } from "express";
 import bodyParser from "body-parser";
-import swaggerUi, { type SwaggerUiOptions } from "swagger-ui-express";
+import swaggerUi from "swagger-ui-express";
+import swaggerJSDoc from "swagger-jsdoc";
 // import { PrismaClient } from "@prisma/client";
 
 import authRouter from "./routes/auth.routes";
@@ -20,25 +21,17 @@ const PORT = 3000;
 const swaggerDefinition = {
   openapi: "3.0.0",
   info: {
-    title: "RCA BAREFOOT TEam4 Bin Backend APIS",
+    title: "API Documentation",
     version: "1.0.0",
-    description: "Documented Swagger Apis For RCA-BAREFOOT-TEAM4-BIN Project",
+    description: "Documentation for the API endpoints",
   },
-  servers: [
-    {
-      url: "http://localhost:3000",
-    },
-  ],
+  servers: [{ url: "http://localhost:3000/api/v1/auth" }],
 };
-const options: SwaggerUiOptions = {
-  swaggerOptions: {
-    apis: [
-      {
-        url: "./routes/*.routes.ts",
-      },
-    ],
-  },
+const options = {
+  swaggerDefinition,
+  apis: ["./src/routes/*.ts"], // Path to the API routes
 };
+const swaggerSpec = swaggerJSDoc(options);
 
 app.get("/", (req: Request, res: Response) => {
   // prisma.user
@@ -49,8 +42,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Barefoot Nomad APIs");
 });
 
-app.use("/api-docs", swaggerUi.serve);
-app.get("/api-docs", swaggerUi.setup(swaggerDefinition, options));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/auth", authRouter);
 
 if (process.env.NODE_ENV !== "test") {
