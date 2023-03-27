@@ -47,6 +47,5 @@ export const signTokens = async (user: Prisma.UserCreateInput) => {
 };
 
 export const deleteUsers = async () => {
-  console.log("deleting...");
   await prisma.user.deleteMany();
 };

@@ -37,7 +37,6 @@ describe("Test login", function () {
         password: "tester1234",
       })
       .end((err, res) => {
-        console.log("this runs the login part");
         res.body.should.have.property("access_token");
         done();
       });

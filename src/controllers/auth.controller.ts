@@ -129,7 +129,7 @@ export const deleteUsersHandler = async (
 ): Promise<void> => {
   await deleteUsers();
 
-  res.status(200).send("Done!")
+  res.status(200).send("Done!");
 };
 
 // Login handler here
