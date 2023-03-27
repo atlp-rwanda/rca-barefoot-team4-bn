@@ -67,6 +67,15 @@ export const checkTokenExist =async (token:string) => {
   })
 }
 
+export const saveToken =async (user_id:string, token:string) => {
+  return await prisma.token.create({
+    data:{
+      user_id,
+      token_value:token,
+    }
+  })
+}
+
 export const getOne =async (id:string) => {
   return await prisma.user.findFirst({
     where:{

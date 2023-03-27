@@ -15,6 +15,7 @@ import {
   signTokens,
   deleteUsers,
   deleteToken,
+  saveToken,
 } from "../services/user.service";
 
 const cookiesOtions: CookieOptions = {
@@ -114,6 +115,9 @@ export const loginHandler = async (
       httpOnly: false,
     });
 
+    //save user token
+
+    await saveToken(user.id,access_token)
     res.status(200).json({
       status: "success",
       access_token,
@@ -141,7 +145,10 @@ export const logout = async (
   res: Response
 ): Promise<void> => {
   const token = req.headers.token as string
-  await deleteToken(token); //To do: waiting for middleware protection to get token
+  await deleteToken(token); 
 
-  res.status(200).send("Done!");
+  res.status(200).send({
+    status: "success",
+    message:"Logged out successfully!"
+  });
 };

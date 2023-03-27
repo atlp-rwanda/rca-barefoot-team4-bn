@@ -3,20 +3,22 @@ import { checkTokenExist, getOne } from "../services/user.service";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const auth =async (request:Request,response:Response, next:NextFunction) => {
-    let token = ""
+
+  try {
+    let token = "";
+    
   if (
     request.headers.authorization &&
     request.headers.authorization.startsWith("Bearer")
-  )
-    token = request.headers.authorization.split(" ")[1]
+  ) {
+    token = request.headers.authorization.split(" ")[1];
+  } else if (request.cookies.access_token) {
+    token = request.cookies.access_token;
+  }
 
   if (!token) {
-    return response
-      .status(403)
-      .send({ success: false, message: "Unauthorized to access this service" })
+    return next(new Error("You are not logged in! Please login "));
   }
-  try {
-
     // check if user token is valid
 
     const userToken = await checkTokenExist(token)
