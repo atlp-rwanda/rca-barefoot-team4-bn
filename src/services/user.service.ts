@@ -22,6 +22,7 @@ export const registerUser = async (
   return await prisma.user.create({
     data: input,
   });
+  // return user;
 };
 
 export const findUniqueUser = async (
@@ -109,35 +110,35 @@ export const updateResetPassword = async (
   });
 };
 
-export const deleteToken =async (token:string) => {
+export const deleteToken = async (token: string) => {
   await prisma.token.delete({
-    where:{
-      token_value:token
-    }
-  })
-}
+    where: {
+      token_value: token,
+    },
+  });
+};
 
-export const checkTokenExist =async (token:string) => {
+export const checkTokenExist = async (token: string) => {
   return await prisma.token.findFirst({
-    where:{
-      token_value:token
-    }
-  })
-}
+    where: {
+      token_value: token,
+    },
+  });
+};
 
-export const saveToken =async (user_id:string, token:string) => {
+export const saveToken = async (user_id: string, token: string) => {
   return await prisma.token.create({
-    data:{
+    data: {
       user_id,
-      token_value:token,
-    }
-  })
-}
+      token_value: token,
+    },
+  });
+};
 
-export const getOne =async (id:string) => {
+export const getOne = async (id: string) => {
   return await prisma.user.findFirst({
-    where:{
-      id
-    }
-  })
-}
+    where: {
+      id,
+    },
+  });
+};

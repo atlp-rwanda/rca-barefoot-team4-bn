@@ -76,6 +76,30 @@ export const registerUserHandler = async (
       password: hashedPassword,
     });
 
+    if (user !== null) {
+      await sendEmail({
+        to: user.email,
+        subject: "Verify your email address",
+        message: `<html>
+        <body>
+          <p>Thank you for registering with Barefoot Nomad!</p>
+          <p>To complete your registration, please verify your email address by clicking on the link below:</p>
+          <div style="text-align:center;margin-bottom:16px;margin-top:16px">
+            <a href="http://localhost:3000/api/v1/verifyEmail" style="background-color:blue;border-radius:8px;padding:12px 24px;text-decoration:none;color:white">Verify Email Address</a>
+          </div>
+          <p>This link will expire in 24 hours. For security reasons, do not share this link with anyone.<br>If you have any questions, please contact us by replying to this email.</p>
+          <p>Thanks,<br>The Barefoot Nomad Team</p>
+        </body>
+      </html>`,
+      })
+        .then(() => {
+          console.log("Verification email sent successfully");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
     const { accessToken, refreshToken } = signTokens(user);
     res.cookie("access_token", accessToken, accessTokenCookieOptions);
     res.cookie("refresh_token", refreshToken, refreshTokenCookieOptions);
@@ -135,9 +159,9 @@ export const loginHandler = async (
       httpOnly: false,
     });
 
-    //save user token
+    // save user token
 
-    await saveToken(user.id,accessToken)
+    await saveToken(user.id, accessToken);
     res.status(200).json({
       status: "success",
       accessToken,
@@ -261,16 +285,12 @@ export const deleteHandler = async (
 
 // Logout handler here
 
-
-export const logout = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const token = req.headers.token as string
-  await deleteToken(token); 
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  const token = req.headers.token as string;
+  await deleteToken(token);
 
   res.status(200).send({
     status: "success",
-    message:"Logged out successfully!"
+    message: "Logged out successfully!",
   });
 };
