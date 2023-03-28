@@ -140,7 +140,7 @@ export const deleteHandler = async (
   res.status(200).send("Done!");
 };
 
-// Login handler here
+// Logout handler here
 
 
 export const logout = async (
