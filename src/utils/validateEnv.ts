@@ -1,6 +1,6 @@
 import { cleanEnv, port, str } from "envalid";
 
-function validateEnv() {
+function validateEnv(): void {
   cleanEnv(process.env, {
     DATABASE_URL: str(),
 

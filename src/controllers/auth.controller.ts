@@ -42,10 +42,10 @@ const refreshTokenCookieOptions: CookieOptions = {
 };
 
 export const registerUserHandler = async (
-  req: Request<{}, {}, RegisterUserInput>,
+  req: Request<unknown, unknown, RegisterUserInput>,
   res: Response,
   next: NextFunction
-) => {
+): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
     // validate request body
     const { error } = validateUserInput(req.body);
@@ -97,10 +97,10 @@ export const registerUserHandler = async (
 
 // LOGIN HANDLER
 export const loginHandler = async (
-  req: Request<{}, {}, LoginUserInput>,
+  req: Request<unknown, unknown, LoginUserInput>,
   res: Response,
   next: NextFunction
-) => {
+): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
     const { email, password } = req.body;
 
