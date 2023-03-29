@@ -38,7 +38,10 @@ export const deserializeUser = async (
     }
 
     // Check if the user still exist
-    const user = await findUniqueUser({ id: decoded?.userId });
+    const user = await findUniqueUser(
+      { id: decoded?.userId },
+      { id: true, firstName: true, lastName: true, email: true, role: true }
+    );
 
     if (user === null) {
       next(new Error(`Invalid token or session has expired`));

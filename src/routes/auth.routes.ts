@@ -7,6 +7,9 @@ import {
 } from "../controllers/auth.controller";
 import { validate } from "../middlewares/validate";
 import { loginUserSchema, registerUserSchema } from "../models/user.model";
+import { deserializeUser } from "../middlewares/deserializeUser";
+import { requireUser } from "../middlewares/requireUser";
+import { restrictTo } from "../middlewares/restrictTo";
 
 /**
  * @swagger
@@ -115,6 +118,12 @@ const router = express.Router();
 
 router.post("/register", validate(registerUserSchema), registerUserHandler);
 router.post("/login", validate(loginUserSchema), loginHandler);
-router.delete("/", deleteUsersHandler);
+router.delete(
+  "/",
+  deserializeUser,
+  requireUser,
+  restrictTo("SUPER_ADMIN", "TRAVEL_ADMINISTRATOR"),
+  deleteUsersHandler
+);
 
 export default router;

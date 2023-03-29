@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider   = "prisma-client-js"
+  provider = "prisma-client-js"
   // engineType = "binary"
 }
 
@@ -21,7 +21,7 @@ model User {
   lastName  String
   role      Role   @default(USER)
 
-  photo  String? @default("default.png")
+  photo String? @default("default.png")
   // social Json?
 
   createdAt DateTime @default(now())
@@ -33,6 +33,10 @@ model User {
 }
 
 enum Role {
+  SUPER_ADMIN
+  TRAVEL_ADMINISTRATOR
+  TRAVEL_TEAM_MEMBER
+  MANAGER
+  REQUESTER
   USER
-  ADMIN
 }
