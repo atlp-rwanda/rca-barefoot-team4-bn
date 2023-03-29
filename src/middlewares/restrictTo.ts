@@ -6,8 +6,6 @@ export const restrictTo = (...roles: string[]) => {
     try {
       const user = res.locals.user;
 
-      console.log(user.role);
-
       if (user === null) {
         next(new Error("User does not exist"));
         return;
