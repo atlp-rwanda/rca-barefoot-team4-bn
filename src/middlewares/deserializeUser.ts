@@ -1,39 +1,38 @@
 import { type Request, type Response, type NextFunction } from "express";
-import config from "config";
 import { omit } from "lodash";
 import { excludedFields, findUniqueUser } from "../services/user.service";
 import { verifyJwt } from "../utils/jwt";
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const deserializeUser = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    let access_token: string = "";
+    let accessToken: string = "";
 
     if (
-      req.headers.authorization &&
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+      req.headers?.authorization &&
       req.headers.authorization.startsWith("Bearer")
     ) {
-      access_token = req.headers.authorization.split(" ")[1];
+      accessToken = req.headers.authorization.split(" ")[1];
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     } else if (req.cookies.access_token) {
-      access_token = req.cookies.access_token;
+      accessToken = req.cookies.access_token;
     }
 
-    if (!access_token) {
+    if (accessToken === "") {
       next(new Error("You are not logged in."));
       return;
     }
 
     const decoded = verifyJwt<{ userId: string }>(
-      access_token,
+      accessToken,
       "accessTokenPrivateKey"
     );
 
-    if (!decoded) {
+    if (decoded === null) {
       next(new Error("Invalid token or user doesn't exist"));
       return;
     }
@@ -41,7 +40,7 @@ export const deserializeUser = async (
     // Check if the user still exist
     const user = await findUniqueUser({ id: decoded?.userId });
 
-    if (!user) {
+    if (user === null) {
       next(new Error(`Invalid token or session has expired`));
       return;
     }

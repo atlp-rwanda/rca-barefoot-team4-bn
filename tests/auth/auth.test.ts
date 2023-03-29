@@ -12,11 +12,11 @@ describe("Testing the users registration", function () {
       .request(app)
       .post("/api/v1/auth/register")
       .send({
-        firstName: "Tester name 1",
-        lastName: "Tester name 2",
-        email: "tester@gmail.com",
-        password: "tester1234",
-        passwordConfirm: "tester1234",
+        firstName: "Marve",
+        lastName: "Mario",
+        email: "marve@gmail.com",
+        password: "marve12345",
+        passwordConfirm: "marve12345",
       })
       .end((err, res) => {
         res.should.have.status(201);
@@ -35,8 +35,8 @@ describe("Test login", function () {
       .post("/api/v1/auth/login")
       // send user login details
       .send({
-        email: "tester@gmail.com",
-        password: "tester1234",
+        email: "marve@gmail.com",
+        password: "marve12345",
       })
       .end((err, res) => {
         res.body.should.have.property("access_token");
