@@ -29,7 +29,7 @@ import { loginUserSchema, registerUserSchema } from "../models/user.model";
  *         role:
  *           type: string
  *           enum: [USER, ADMIN]
-*         password:
+ *         password:
  *           type: string
  *         passwordConfirm:
  *           type: string
