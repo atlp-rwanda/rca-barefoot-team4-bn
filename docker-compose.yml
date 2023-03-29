@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  db:
+    container_name: db
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/data/db
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+  
+  api:
+    container_name: api
+    restart: always
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+    - .:/usr/src/app
+
+volumes: 
+  data:

@@ -2,17 +2,13 @@ import jwt, { type SignOptions } from "jsonwebtoken";
 import config from "config";
 
 export const signJwt = (
-  payload: Object,
+  payload: object,
   keyName: "accessTokenPrivateKey" | "refreshTokenPrivateKey",
   options: SignOptions
-) => {
-  try {
-    return jwt.sign(payload, config.get<string>("accessTokenPrivateKey"), {
-      ...options,
-    });
-  } catch (error) {
-    throw error;
-  }
+): string => {
+  return jwt.sign(payload, config.get<string>("accessTokenPrivateKey"), {
+    ...options,
+  });
 };
 
 export const verifyJwt = <T>(
