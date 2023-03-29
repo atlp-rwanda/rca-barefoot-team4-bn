@@ -82,3 +82,29 @@ export const requestForgotPassword = async (
     },
   });
 };
+
+export const findUniqueResetPassword = async (
+  where: Prisma.ResetPasswordWhereUniqueInput
+): Promise<
+  | (ResetPassword & {
+      user: User;
+    })
+  | null
+> => {
+  return await prisma.resetPassword.findUnique({
+    where,
+    include: {
+      user: true,
+    },
+  });
+};
+
+export const updateResetPassword = async (
+  where: Prisma.ResetPasswordWhereUniqueInput,
+  data: Prisma.ResetPasswordUpdateInput
+): Promise<ResetPassword> => {
+  return await prisma.resetPassword.update({
+    where,
+    data,
+  });
+};
