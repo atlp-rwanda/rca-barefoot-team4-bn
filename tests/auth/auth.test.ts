@@ -39,7 +39,7 @@ describe("Test login", function () {
         password: "marve12345",
       })
       .end((err, res) => {
-        res.body.should.have.property("access_token");
+        res.body.should.have.property("accessToken");
         done();
       });
   });
