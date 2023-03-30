@@ -17,8 +17,17 @@ import {
   findUniqueUser,
   signTokens,
   deleteUsers,
+  requestForgotPassword,
+  findUniqueResetPassword,
+  updateUser,
+  updateResetPassword,
 } from "../services/user.service";
-import { validateUserInput } from "../utils/validation/validate.user";
+import { randomBytes } from "crypto";
+import { sendEmail } from "../utils/mailer";
+import {
+  validateResetPasswordInput,
+  validateUserInput,
+} from "../utils/validation/validate.user";
 
 const cookiesOtions: CookieOptions = {
   httpOnly: true,
@@ -133,10 +142,112 @@ export const loginHandler = async (
   }
 };
 
+export const forgotPasswordHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { email } = req.body;
+    console.log(email);
+    if (email === undefined) {
+      res.status(400).send({
+        status: "fail",
+        message: "Email is required",
+      });
+      return;
+    }
+
+    const user = await findUniqueUser({ email: email.toLowerCase() });
+    if (user === null) {
+      res.status(404).send({
+        status: "fail",
+        message: "User not found",
+      });
+      console.log("User not found");
+      return;
+    }
+
+    // generate a crypto token
+    const resetToken = randomBytes(32).toString("hex");
+    await requestForgotPassword(user.id, resetToken);
+
+    await sendEmail({
+      to: user.email,
+      subject: "Reset your password",
+      message: `<p>We have received a request to reset your password for the Barefoot Normad app. If you did not make this request, please ignore this email. Otherwise, please click on the link below to create a new password:</p>
+      <div style="text-align:center;margin-bottom:16px;margin-top:16px">
+      <a style="background-color:blue;border-radius:8px;padding:12px 24px;text-decoration:none;color:white" href="http://localhost:3000/reset-password/${resetToken}">Reset Password</a>
+      </div>
+      <p>This link will expire in 24 hours. For security reasons, do not share this link with anyone.<br>If you have any questions, please contact us by replying to this email.</p>
+      <p>Thanks,<br>The Barefoot Normad Team</p>`,
+    });
+
+    res.send({
+      status: "success",
+      message: "Password reset link sent to your email",
+    });
+  } catch (error: any) {
+    res.status(500).send({
+      status: "fail",
+      message: "Something went wrong",
+    });
+  }
+};
+
+export const resetPasswordHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { error } = validateResetPasswordInput(req.body);
+    if (error != null) {
+      res.status(400).send({
+        status: "fail",
+        message: error.details[0].message,
+      });
+      return;
+    }
+
+    const reset = await findUniqueResetPassword({
+      token: req.body.token,
+    });
+
+    if (reset === null || reset.isUsed || reset.expiresAt < new Date()) {
+      res.status(400).send({
+        status: "fail",
+        message: "Invalid or expired token",
+      });
+      return;
+    }
+    await updateUser(
+      { id: reset.userId },
+      { password: await bcrypt.hash(req.body.password, 10) }
+    );
+    await updateResetPassword({ token: reset.token }, { isUsed: true });
+
+    res.send({
+      status: "success",
+      message: "Password reset successful",
+    });
+    // send email to user
+    await sendEmail({
+      to: reset.user.email,
+      subject: "Password reset successful",
+      message: `<p>Your password has been successfully reset. If you did not make this request, please contact us immediately.</p>
+      <p>Thanks,<br>The Barefoot Normad Team</p>`,
+    });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).send({
+      status: "fail",
+      message: "Something went wrong",
+    });
+  }
+};
+
 export const deleteHandler = async (
   req: Request,
-  res: Response,
-  next: NextFunction
+  res: Response
 ): Promise<void> => {
   await deleteUsers();
 
