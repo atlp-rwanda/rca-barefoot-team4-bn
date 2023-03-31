@@ -1,4 +1,9 @@
-import { PrismaClient, type Prisma, type User } from "@prisma/client";
+import {
+  PrismaClient,
+  type Role,
+  type Prisma,
+  type User,
+} from "@prisma/client";
 import config from "config";
 import { type Tokens } from "token";
 import { signJwt } from "../utils/jwt";
@@ -45,6 +50,22 @@ export const signTokens = (user: Prisma.UserCreateInput): Tokens => {
   });
 
   return { accessToken, refreshToken };
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const makeAdmins = async (userId: string, theRole: Role) => {
+  console.log("Updating the user");
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      role: theRole,
+    },
+  });
+
+  return updatedUser;
 };
 
 export const deleteUsers = async (): Promise<Prisma.BatchPayload> => {

@@ -18,8 +18,8 @@ export const deserializeUser = async (
     ) {
       accessToken = req.headers.authorization.split(" ")[1];
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    } else if (req.cookies.access_token) {
-      accessToken = req.cookies.access_token;
+    } else if (req.cookies?.access_token) {
+      accessToken = req.cookies?.access_token;
     }
 
     if (accessToken === "") {

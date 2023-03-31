@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "production") cookiesOtions.secure = true;
 
 const accessTokenCookieOptions: CookieOptions = {
   ...cookiesOtions,
-  expires: new Date(Date.now() + 15 * 60 * 1000),
+  expires: new Date(Date.now() + 60 * 60 * 1000),
   maxAge: config.get<number>("accessTokenExpiresIn") * 60 * 1000,
 };
 
@@ -142,5 +142,3 @@ export const deleteUsersHandler = async (
 
   res.status(200).send("Done!");
 };
-
-// Login handler here

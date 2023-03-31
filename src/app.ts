@@ -6,6 +6,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 // import { PrismaClient } from "@prisma/client";
 
 import authRouter from "./routes/auth.routes";
+import userRoute from "./routes/user.routes";
 import validateEnv from "./utils/validateEnv";
 
 validateEnv();
@@ -44,6 +45,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/user", userRoute);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
