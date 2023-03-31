@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@prisma/client": "4.11.0",
+    "@sendgrid/mail": "^7.7.0",
     "@types/nodemailer": "^6.4.7",
     "@types/swagger-jsdoc": "^6.0.1",
     "@types/swagger-ui": "^3.52.0",
@@ -58,6 +59,7 @@
     "@types/lodash": "^4.14.191",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.14.6",
+    "@types/sendgrid": "^4.3.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "coveralls": "^3.1.1",
     "eslint": "^8.0.1",
