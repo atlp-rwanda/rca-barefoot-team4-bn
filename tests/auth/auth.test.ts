@@ -6,7 +6,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe("Testing the users registration", function () {
+describe("Testing the user registration", function () {
   it("should register the user", function (done) {
     chai
       .request(app)
