@@ -40,3 +40,10 @@ enum Role {
   REQUESTER
   USER
 }
+
+model Accomodatation {
+  id            String @id @default(uuid())
+  accomodationFacility    String
+  centerImage   String
+  numberOfRooms Int
+}
