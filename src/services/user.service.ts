@@ -54,7 +54,7 @@ export const signTokens = (user: Prisma.UserCreateInput): Tokens => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const makeAdmins = async (userId: string, theRole: Role) => {
+export const changeUserRole = async (userId: string, theRole: Role) => {
   console.log("Updating the user");
 
   const updatedUser = await prisma.user.update({

@@ -3,16 +3,16 @@ import express from "express";
 import { deserializeUser } from "../middlewares/deserializeUser";
 import { requireUser } from "../middlewares/requireUser";
 import { restrictTo } from "../middlewares/restrictTo";
-import { makeAdminHandler } from "../controllers/user.controller";
+import { changeRoleHandler } from "../controllers/user.controller";
 
 const router = express.Router();
 
 router.put(
-  "/make-admin/:userId",
+  "/change-role/:userId",
   deserializeUser,
   requireUser,
   restrictTo("SUPER_ADMIN", "TRAVEL_ADMINISTRATOR"),
-  makeAdminHandler
+  changeRoleHandler
 );
 
 export default router;
