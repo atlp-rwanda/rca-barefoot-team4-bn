@@ -22,12 +22,10 @@ model User {
   role      Role   @default(USER)
 
   photo String? @default("default.png")
-  // social Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // other fields should be added as the project grows
   @@index([email])
   @@map(name: "users")
 }
@@ -39,11 +37,4 @@ enum Role {
   MANAGER
   REQUESTER
   USER
-}
-
-model Accomodatation {
-  id            String @id @default(uuid())
-  accomodationFacility    String
-  centerImage   String
-  numberOfRooms Int
 }

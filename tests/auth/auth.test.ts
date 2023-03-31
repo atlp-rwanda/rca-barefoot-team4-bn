@@ -46,17 +46,3 @@ describe("Test login", function () {
   });
 });
 
-// describe("Remove all users", () => {
-//   it("All the users must be removed from the table of users", function (done) {
-//     chai
-//       .request(app)
-//       .delete("/api/v1/auth")
-//       .end((err, res) => {
-//         res.should.have.status(200);
-//         res.text.should.be.eql("Done!");
-//         done();
-//       });
-//   });
-// });
-
-// hotels, campsites, short-term furnished accommodation, holiday homes, resorts, holiday centres for children and young people, youth hostels and refuges,
