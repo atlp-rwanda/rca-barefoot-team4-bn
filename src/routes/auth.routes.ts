@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import express from "express";
+import { auth } from "../middlewares/auth";
 import {
   deleteHandler,
   forgotPasswordHandler,
   loginHandler,
+  logout,
   registerUserHandler,
   resetPasswordHandler,
 } from "../controllers/auth.controller";
@@ -183,6 +185,7 @@ const router = express.Router();
 
 router.post("/register", validate(registerUserSchema), registerUserHandler);
 router.post("/login", validate(loginUserSchema), loginHandler);
+router.post("/logout",auth, logout)
 router.delete("/", deleteHandler);
 router.post("/forgot-password", forgotPasswordHandler);
 router.post("/reset-password", resetPasswordHandler);

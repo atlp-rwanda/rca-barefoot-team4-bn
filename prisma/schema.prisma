@@ -20,6 +20,7 @@ model User {
   firstName String
   lastName  String
   role      Role   @default(USER)
+  token Token?
 
   photo String? @default("default.png")
   // social Json?
@@ -47,7 +48,19 @@ model ResetPassword {
   @@map(name: "reset_password")
 }
 
+
+model Token {
+  id        String @id @default(uuid())
+  token_value  String @unique
+  user User @relation(fields: [user_id], references: [id])
+  user_id   String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
 enum Role {
   USER
   ADMIN
 }
+ 
