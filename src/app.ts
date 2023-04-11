@@ -3,15 +3,15 @@ import express, { type Request, type Response } from "express";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
-// import { PrismaClient } from "@prisma/client";
+import routes from "./routes";
 
 import authRouter from "./routes/auth.routes";
+import userRouter from "./routes/user.routes";
 import validateEnv from "./utils/validateEnv";
 
 validateEnv();
 
 const app = express();
-// const prisma = new PrismaClient();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -25,7 +25,7 @@ const swaggerDefinition = {
     version: "1.0.0",
     description: "Documentation for the API endpoints",
   },
-  servers: [{ url: "http://localhost:3000/api/v1/auth" }],
+  servers: [{ url: "http://localhost:3000/api/v1" }],
 };
 const options = {
   swaggerDefinition,
@@ -33,17 +33,8 @@ const options = {
 };
 const swaggerSpec = swaggerJSDoc(options);
 
-app.get("/", (req: Request, res: Response) => {
-  // prisma.user
-  //   .findMany()
-  //   .then((users) => res.send(users))
-  //   .catch((err) => res.status(500).send(err));
-
-  res.send("Welcome to Barefoot Nomad APIs");
-});
-
+app.use("/api/v1", routes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use("/api/v1/auth", authRouter);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {

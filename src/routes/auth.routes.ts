@@ -85,7 +85,7 @@ import { loginUserSchema, registerUserSchema } from "../models/user.model";
 
 /**
  * @swagger
- * /register:
+ * /auth/register:
  *   post:
  *     summary: Register a new user
  *     requestBody:
@@ -105,7 +105,7 @@ import { loginUserSchema, registerUserSchema } from "../models/user.model";
 
 /**
  * @swagger
- * /login:
+ * /auth/login:
  *   post:
  *     summary: Login a user
  *     requestBody:
@@ -125,7 +125,7 @@ import { loginUserSchema, registerUserSchema } from "../models/user.model";
 
 /**
  * @swagger
- * /:
+ * /auth/:
  *   delete:
  *     summary: Delete a user
  *     responses:
@@ -139,7 +139,7 @@ import { loginUserSchema, registerUserSchema } from "../models/user.model";
 
 /**
  * @swagger
- * /forgot-password:
+ * /auth/forgot-password:
  *   post:
  *     summary: Request password reset
  *     requestBody:
@@ -161,7 +161,7 @@ import { loginUserSchema, registerUserSchema } from "../models/user.model";
 
 /**
  * @swagger
- * /reset-password:
+ * /auth/reset-password:
  *   post:
  *     summary: Reset password
  *     requestBody:
