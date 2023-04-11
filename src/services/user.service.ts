@@ -108,3 +108,25 @@ export const updateResetPassword = async (
     data,
   });
 };
+
+export const getAllUsersService = async (): Promise<User[]> => {
+  return prisma.user.findMany();
+};
+
+export const getUserbyId = async (
+  where: Prisma.UserWhereUniqueInput
+): Promise<User | null> => {
+  return prisma.user.findUnique({
+    where,
+  });
+};
+
+export const updateUserProfileService = async (
+  where: Prisma.UserWhereUniqueInput,
+  data: Prisma.UserUpdateInput
+): Promise<User> => {
+  return await prisma.user.update({
+    where,
+    data,
+  });
+};
