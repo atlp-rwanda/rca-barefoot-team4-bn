@@ -1,6 +1,5 @@
-import { User } from "@prisma/client";
 import { type Request, type Response, type NextFunction, query } from "express";
-
+import bcrypt from "bcryptjs";
 import {
   getAllUsersService,
   updateUserProfileService,
@@ -50,14 +49,11 @@ export const updateUserProfile = async (
 ): Promise<void> => {
   try {
     const id = req.params.id;
-    console.log(req)
-    console.log(id)
     const { firstName, lastName, email, password } = req.body;
-    console.log(req.body)
-    console.log({ data: req.body });
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const profile = await updateUserProfileService(
       { id },
-      { firstName, lastName, email, password }
+      { firstName, lastName, email, password: hashedPassword }
     );
     res.status(200).json({
       message: "User Updated",
