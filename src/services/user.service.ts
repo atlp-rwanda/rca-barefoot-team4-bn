@@ -110,13 +110,13 @@ export const updateResetPassword = async (
 };
 
 export const getAllUsersService = async (): Promise<User[]> => {
-  return prisma.user.findMany();
+  return await prisma.user.findMany();
 };
 
 export const getUserbyId = async (
   where: Prisma.UserWhereUniqueInput
 ): Promise<User | null> => {
-  return prisma.user.findUnique({
+  return await prisma.user.findUnique({
     where,
   });
 };

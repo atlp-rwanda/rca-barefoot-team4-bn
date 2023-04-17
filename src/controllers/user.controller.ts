@@ -1,4 +1,4 @@
-import { type Request, type Response, type NextFunction, query } from "express";
+import { type Request, type Response, type NextFunction } from "express";
 import bcrypt from "bcryptjs";
 import {
   getAllUsersService,
@@ -11,11 +11,7 @@ Author: Merlyne Iradukunda
 Date: April 4, 2023
 */
 
-export const getAllUsers = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+export const getAllUsers = async (res: Response): Promise<void> => {
   try {
     const users = await getAllUsersService();
     res
@@ -49,7 +45,7 @@ export const updateUserProfile = async (
 ): Promise<void> => {
   try {
     const id = req.params.id;
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email } = req.body;
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const profile = await updateUserProfileService(
       { id },

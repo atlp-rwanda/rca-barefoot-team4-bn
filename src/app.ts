@@ -1,12 +1,10 @@
 import "dotenv/config";
-import express, { type Request, type Response } from "express";
+import express from "express";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import routes from "./routes";
 
-import authRouter from "./routes/auth.routes";
-import userRouter from "./routes/user.routes";
 import validateEnv from "./utils/validateEnv";
 
 validateEnv();
