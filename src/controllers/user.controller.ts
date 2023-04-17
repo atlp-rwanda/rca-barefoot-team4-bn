@@ -1,4 +1,4 @@
-import { type Request, type Response, type NextFunction } from "express";
+import { type Request, type Response } from "express";
 import bcrypt from "bcryptjs";
 import {
   getAllUsersService,
