@@ -21,6 +21,8 @@ import {
   updateUser,
   updateResetPassword,
   deleteUsers,
+  deleteToken,
+  saveToken,
 } from "../services/user.service";
 import { randomBytes } from "crypto";
 import { sendEmail } from "../utils/mailer";
@@ -133,6 +135,8 @@ export const loginHandler = async (
       httpOnly: false,
     });
 
+    // save user token
+    await saveToken(user.id, accessToken);
     res.status(200).json({
       status: "success",
       accessToken,
@@ -252,4 +256,16 @@ export const deleteUsersHandler = async (
   await deleteUsers();
 
   res.status(200).send("Done!");
+};
+
+// Logout handler here
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  const token = req.headers.token as string;
+  await deleteToken(token);
+
+  res.status(200).send({
+    status: "success",
+    message: "Logged out successfully!",
+  });
 };

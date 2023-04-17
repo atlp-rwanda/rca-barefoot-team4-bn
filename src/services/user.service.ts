@@ -55,8 +55,6 @@ export const signTokens = (user: Prisma.UserCreateInput): Tokens => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const changeUserRole = async (userId: string, theRole: Role) => {
-  console.log("Updating the user");
-
   const updatedUser = await prisma.user.update({
     where: {
       id: userId,
@@ -122,4 +120,39 @@ export const updateResetPassword = async (
     where,
     data,
   });
+};
+
+export const deleteToken = async (token: string) => {
+  await prisma.token.delete({
+    where: {
+      token_value: token,
+    },
+  });
+};
+
+export const checkTokenExist = async (token: string) => {
+  return await prisma.token.findFirst({
+    where: {
+      token_value: token,
+    },
+  });
+};
+
+export const saveToken = async (user_id: string, token: string) => {
+  return await prisma.token.create({
+    data: {
+      user_id,
+      token_value: token,
+    },
+  });
+};
+
+export const getOne = async (id: string): Promise<User>=> {
+  const user = await prisma.user.findFirst({
+    where: {
+      id,
+    },
+  });
+
+  return user;
 };

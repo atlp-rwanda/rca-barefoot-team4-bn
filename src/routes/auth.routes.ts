@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import express from "express";
+import { auth } from "../middlewares/auth";
 import {
   deleteUsersHandler,
   forgotPasswordHandler,
   loginHandler,
+  logout,
   registerUserHandler,
   resetPasswordHandler,
 } from "../controllers/auth.controller";
@@ -197,6 +199,7 @@ router.delete(
   deleteUsersHandler
 );
 router.delete("/", deleteUsersHandler);
+router.post("/logout", auth, logout);
 router.post("/forgot-password", forgotPasswordHandler);
 router.post("/reset-password", resetPasswordHandler);
 
