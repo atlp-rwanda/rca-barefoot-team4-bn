@@ -5,16 +5,12 @@ export function validateUserInput(body: object): Joi.ValidationResult<any> {
   const schema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
-<<<<<<< HEAD
-    passwordConfirm: Joi.string().min(6).required(),
-=======
     passwordConfirm: Joi.ref("password"),
->>>>>>> e8c9d835f19a7c28a55539bba7045182ed8578b7
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     role: Joi.string().valid(
       "SUPER_ADMIN",
-      "TRAVEL_ADMINISTRATOR",
+      "TRAVEL_ADMIN",
       "TRAVEL_TEAM_MEMBER",
       "MANAGER",
       "REQUESTER",

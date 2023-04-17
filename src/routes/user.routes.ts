@@ -11,7 +11,7 @@ router.put(
   "/change-role/:userId",
   deserializeUser,
   requireUser,
-  restrictTo("SUPER_ADMIN", "TRAVEL_ADMINISTRATOR"),
+  restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"),
   changeRoleHandler
 );
 
