@@ -16,11 +16,11 @@ import {
   registerUser,
   findUniqueUser,
   signTokens,
-  deleteUsers,
   requestForgotPassword,
   findUniqueResetPassword,
   updateUser,
   updateResetPassword,
+  deleteUsers,
   deleteToken,
   saveToken,
 } from "../services/user.service";
@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === "production") cookiesOtions.secure = true;
 
 const accessTokenCookieOptions: CookieOptions = {
   ...cookiesOtions,
-  expires: new Date(Date.now() + 15 * 60 * 1000),
+  expires: new Date(Date.now() + 60 * 60 * 1000),
   maxAge: config.get<number>("accessTokenExpiresIn") * 60 * 1000,
 };
 
@@ -135,9 +135,8 @@ export const loginHandler = async (
       httpOnly: false,
     });
 
-    //save user token
-
-    await saveToken(user.id,accessToken)
+    // save user token
+    await saveToken(user.id, accessToken);
     res.status(200).json({
       status: "success",
       accessToken,
@@ -250,7 +249,7 @@ export const resetPasswordHandler = async (
   }
 };
 
-export const deleteHandler = async (
+export const deleteUsersHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -261,16 +260,12 @@ export const deleteHandler = async (
 
 // Logout handler here
 
-
-export const logout = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const token = req.headers.token as string
-  await deleteToken(token); 
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  const token = req.headers.token as string;
+  await deleteToken(token);
 
   res.status(200).send({
     status: "success",
-    message:"Logged out successfully!"
+    message: "Logged out successfully!",
   });
 };

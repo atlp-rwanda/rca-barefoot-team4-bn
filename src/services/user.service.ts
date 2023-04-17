@@ -1,5 +1,6 @@
 import {
   PrismaClient,
+  type Role,
   type ResetPassword,
   type Prisma,
   type User,
@@ -33,7 +34,6 @@ export const findUniqueUser = async (
     select,
   })) as User;
 };
-
 export const signTokens = (user: Prisma.UserCreateInput): Tokens => {
   // 1. Create Session
   // redisClient.set(`${user.id}`, JSON.stringify(user), {
@@ -42,15 +42,29 @@ export const signTokens = (user: Prisma.UserCreateInput): Tokens => {
 
   // 2. Create Access and Refresh tokens
 
-  const accessToken = signJwt({ id: user.id }, "accessTokenPrivateKey", {
+  const accessToken = signJwt({ userId: user.id }, "accessTokenPrivateKey", {
     expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
   });
 
-  const refreshToken = signJwt({ id: user.id }, "refreshTokenPrivateKey", {
+  const refreshToken = signJwt({ userId: user.id }, "refreshTokenPrivateKey", {
     expiresIn: `${config.get<number>("refreshTokenExpiresIn")}m`,
   });
 
   return { accessToken, refreshToken };
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const changeUserRole = async (userId: string, theRole: Role) => {
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      role: theRole,
+    },
+  });
+
+  return updatedUser;
 };
 
 export const updateUser = async (
@@ -64,7 +78,6 @@ export const updateUser = async (
 };
 
 export const deleteUsers = async (): Promise<Prisma.BatchPayload> => {
-  console.log("deleting...");
   return await prisma.user.deleteMany();
 };
 
@@ -109,35 +122,37 @@ export const updateResetPassword = async (
   });
 };
 
-export const deleteToken =async (token:string) => {
+export const deleteToken = async (token: string) => {
   await prisma.token.delete({
-    where:{
-      token_value:token
-    }
-  })
-}
+    where: {
+      token_value: token,
+    },
+  });
+};
 
-export const checkTokenExist =async (token:string) => {
+export const checkTokenExist = async (token: string) => {
   return await prisma.token.findFirst({
-    where:{
-      token_value:token
-    }
-  })
-}
+    where: {
+      token_value: token,
+    },
+  });
+};
 
-export const saveToken =async (user_id:string, token:string) => {
+export const saveToken = async (user_id: string, token: string) => {
   return await prisma.token.create({
-    data:{
+    data: {
       user_id,
-      token_value:token,
-    }
-  })
-}
+      token_value: token,
+    },
+  });
+};
 
-export const getOne =async (id:string) => {
-  return await prisma.user.findFirst({
-    where:{
-      id
-    }
-  })
-}
+export const getOne = async (id: string): Promise<User>=> {
+  const user = await prisma.user.findFirst({
+    where: {
+      id,
+    },
+  });
+
+  return user;
+};

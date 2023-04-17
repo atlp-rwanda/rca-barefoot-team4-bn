@@ -1,7 +1,12 @@
 import { object, string, type TypeOf, z } from "zod";
+
 enum Role {
+  SUPER_ADMIN = "SUPER_ADMIN",
+  TRAVEL_ADMIN = "TRAVEL_ADMINISTRATOR",
+  TRAVEL_TEAM_MEMBER = "TRAVEL_TEAM_MEMBER",
+  MANAGER = "MANAGER",
+  REQUESTER = "REQUESTER",
   USER = "USER",
-  ADMIN = "ADMIN",
 }
 
 export const registerUserSchema = object({

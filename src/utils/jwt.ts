@@ -13,7 +13,7 @@ export const signJwt = (
 
 export const verifyJwt = <T>(
   token: string,
-  keyName: "accessTokenPublicKey" | "refreshTokenPublicKey"
+  keyName: "accessTokenPrivateKey" | "refreshTokenPrivateKey"
 ): T | null => {
   try {
     const decoded = jwt.verify(

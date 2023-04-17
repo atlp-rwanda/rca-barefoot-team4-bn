@@ -29,7 +29,6 @@ model User {
   updatedAt     DateTime        @updatedAt
   ResetPassword ResetPassword[]
 
-  // other fields should be added as the project grows
   @@index([email])
   @@map(name: "users")
 }
@@ -60,7 +59,11 @@ model Token {
 }
 
 enum Role {
+  SUPER_ADMIN
+  TRAVEL_ADMIN
+  TRAVEL_TEAM_MEMBER
+  MANAGER
+  REQUESTER
   USER
-  ADMIN
 }
  
