@@ -28,4 +28,13 @@ jobs:
       run: yarn lint
 
     - name: Run tests
+     
+      env:
+        DATABASE_URL: ${{secrets.DATABASE_URL }}
+        PORT: ${{secrets.PORT }}
+        NODE_ENV: ${{secrets.NODE_ENV }}
+        JWT_ACCESS_TOKEN_PRIVATE_KEY: ${{secrets.JWT_ACCESS_TOKEN_PRIVATE_KEY }}
+        JWT_ACCESS_TOKEN_PUBLIC_KEY: ${{secrets.JWT_ACCESS_TOKEN_PUBLIC_KEY }}
+        JWT_REFRESH_TOKEN_PRIVATE_KEY: ${{secrets.JWT_REFRESH_TOKEN_PRIVATE_KEY }}
+        JWT_REFRESH_TOKEN_PUBLIC_KEY: ${{secrets.JWT_REFRESH_TOKEN_PUBLIC_KEY }}
       run: yarn test

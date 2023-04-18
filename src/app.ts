@@ -37,7 +37,7 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Barefoot Nomad APIs");
+  res.send("Welcome to Barefoot Nomad APIs").status(200);
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
