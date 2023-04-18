@@ -6,7 +6,10 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
+import airportRouter from "./routes/flight/airport.routes";
+import flightRouter from "./routes/flight/flight.routes";
 import validateEnv from "./utils/validateEnv";
+// import 
 
 validateEnv();
 
@@ -40,6 +43,8 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/airport",airportRouter);
+app.use("/api/v1/flight",flightRouter);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
