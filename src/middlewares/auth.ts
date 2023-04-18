@@ -47,6 +47,5 @@ export const auth =async (request:Request,response:Response, next:NextFunction) 
     request.headers.token = token
     next()
   } catch (e: any) {
-    return response.status(500).send({ success: false, message:e.message})
-  }
+    return response.status(500).send({ success: false, message:e.message})}
 }
