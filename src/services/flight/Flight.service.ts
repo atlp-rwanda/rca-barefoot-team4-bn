@@ -1,4 +1,9 @@
-import { Flight, FlightBooking, FlightSeatPrice, PrismaClient } from "@prisma/client"
+import {
+  Flight,
+  FlightBooking,
+  FlightSeatPrice,
+  PrismaClient
+} from "@prisma/client"
 import { ApiError } from "../../utils/ApiError"
 import { getStatusCode } from "../../utils/errors"
 import { getMessage } from "../../utils/errors"
@@ -32,15 +37,14 @@ export class FlightService {
         departure_time: flightBody.departure_time,
         arrival_time: flightBody.arrival_time,
         departure_airport_id: flightBody.departure_airport_id,
-        arrival_airport_id: flightBody.arrival_airport_id ,
+        arrival_airport_id: flightBody.arrival_airport_id
       } as unknown
       const data = await prisma.flight.create({
         data: flightData as Flight
       })
 
       const newBody2 = body as IUnifiedFlight
-      newBody2.flight_seat_prices.map(async(flightSeatPrice) => {
-        
+      newBody2.flight_seat_prices.map(async (flightSeatPrice) => {
         const flightSeatPriceData = {
           flight_id: data.id,
           class: flightSeatPrice.class,
@@ -126,13 +130,12 @@ export class FlightService {
       throw new ApiError(false, getStatusCode(err), getMessage(err))
     }
   }
-  
 
   // other crud services
 
   // for flights
 
-  async getAll(page:number, limit:number) {
+  async getAll(page: number, limit: number) {
     try {
       const count = await prisma.flight.count()
       const data = await prisma.flight.findMany({
@@ -145,7 +148,7 @@ export class FlightService {
         }
       })
 
-      const hasNextPage = (page * limit) < count
+      const hasNextPage = page * limit < count
       const hasPevPage = page > 1
 
       return {
@@ -219,7 +222,7 @@ export class FlightService {
     try {
       const data = await prisma.flight.findMany({
         where: {
-          airline:{
+          airline: {
             contains: airline
           }
         },
@@ -235,14 +238,12 @@ export class FlightService {
         message: "Flight retrieved successfully",
         data: data
       }
-
     } catch (err: unknown) {
       throw new ApiError(false, getStatusCode(err), getMessage(err))
     }
   }
 
-
-  async getAllAvailable(page:number, limit:number) {
+  async getAllAvailable(page: number, limit: number) {
     try {
       const count = await prisma.flight.count()
       const data = await prisma.flight.findMany({
@@ -263,7 +264,7 @@ export class FlightService {
           arrival_airport: true
         }
       })
-      const hasNextPage = (page * limit) < count
+      const hasNextPage = page * limit < count
       const hasPevPage = page > 1
       return {
         statusCode: 200,
@@ -309,9 +310,9 @@ export class FlightService {
         include: {
           user: true,
           flight_seat_price: {
-            include:{
+            include: {
               flight: {
-                include:{
+                include: {
                   departure_airport: true,
                   arrival_airport: true
                 }
@@ -333,7 +334,7 @@ export class FlightService {
 
   // for flight seat prices
 
-  async getAllFlightSeatPrices(page:number,limit:number) {
+  async getAllFlightSeatPrices(page: number, limit: number) {
     try {
       const count = await prisma.flightSeatPrice.count()
       const data = await prisma.flightSeatPrice.findMany({
@@ -341,14 +342,14 @@ export class FlightService {
         take: limit,
         include: {
           flight: {
-            include:{
+            include: {
               departure_airport: true,
               arrival_airport: true
             }
           }
         }
       })
-      const hasNextPage = (page * limit) < count
+      const hasNextPage = page * limit < count
       const hasPevPage = page > 1
 
       return {
@@ -357,7 +358,6 @@ export class FlightService {
         data: data,
         hasNextPage,
         hasPevPage
-        
       }
     } catch (err: unknown) {
       throw new ApiError(false, getStatusCode(err), getMessage(err))
@@ -372,7 +372,7 @@ export class FlightService {
         },
         include: {
           flight: {
-            include:{
+            include: {
               departure_airport: true,
               arrival_airport: true
             }
@@ -398,7 +398,7 @@ export class FlightService {
         },
         include: {
           flight: {
-            include:{
+            include: {
               departure_airport: true,
               arrival_airport: true
             }
@@ -415,7 +415,6 @@ export class FlightService {
       throw new ApiError(false, getStatusCode(err), getMessage(err))
     }
   }
-
 
   async updateFlight(id: string, body: Flight) {
     try {
@@ -436,7 +435,6 @@ export class FlightService {
     }
   }
 
-
   async updateFlightSeatPrice(id: string, body: FlightSeatPrice) {
     try {
       const data = await prisma.flightSeatPrice.update({
@@ -455,5 +453,4 @@ export class FlightService {
       throw new ApiError(false, getStatusCode(err), getMessage(err))
     }
   }
- 
 }
