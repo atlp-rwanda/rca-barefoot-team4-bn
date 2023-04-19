@@ -9,8 +9,7 @@ export const deserializeUser = async (
   next: NextFunction
 ): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
-    let accessToken: string = "";
-
+    let accessToken = "";
     if (
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       req.headers?.authorization &&

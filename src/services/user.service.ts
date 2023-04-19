@@ -154,5 +154,5 @@ export const getOne = async (id: string) => {
     where: {
       id,
     },
-  });
+  }) as User;
 };
