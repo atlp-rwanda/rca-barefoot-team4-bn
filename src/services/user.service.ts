@@ -152,7 +152,7 @@ export const getOne = async (id: string): Promise<User>=> {
     where: {
       id,
     },
-  });
+  }) as User;
 
   return user;
 };

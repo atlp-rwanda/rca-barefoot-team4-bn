@@ -1,48 +1,59 @@
-import chai from "chai";
-import chaiHttp from "chai-http";
-import app from "../../src/app";
+import app from "../../src/app"
+import request from "supertest"
+import { expect } from "chai"
+import { PrismaClient } from "@prisma/client"
 
-let should = chai.should();
+const newUser = {
+  firstName: "User",
+  lastName: "Test",
+  email: "test-user@gmail.com",
+  role: "USER",
+  password: "Test@123",
+  passwordConfirm: "Test@123"
+}
 
-chai.use(chaiHttp);
+const prisma = new PrismaClient()
 
-describe("Testing the user registration", function () {
-  it("should register the user", function (done) {
-    chai
-      .request(app)
-      .post("/api/v1/auth/register")
-      .send({
-        firstName: "Marve",
-        lastName: "Mario",
-        email: "marve@gmail.com",
-        role: "SUPER_ADMIN",
-        password: "marve12345",
-        passwordConfirm: "marve12345",
-      })
-      .end((err, res) => {
-        res.should.have.status(201);
-        res.body.should.be.a("object");
+describe("Authentication", () => {
+  // Test case for successful authentication
+  it("should create user", async () => {
+    const res = await request(app).post("/api/v1/auth/register").send(newUser)
 
-        done();
-      });
-  });
-});
+    expect(res.status).to.equal(201)
+  })
 
-describe("Test login", function () {
-  it("Should login the user", function (done) {
-    // follow up with login
-    chai
-      .request(app)
-      .post("/api/v1/auth/login")
-      // send user login details
-      .send({
-        email: "marve@gmail.com",
-        password: "marve12345",
-      })
-      .end((err, res) => {
-        res.body.should.have.property("accessToken");
-        done();
-      });
-  });
-});
+  // test use login
+  it("should login user", async () => {
+    const res = await request(app).post("/api/v1/auth/login").send({
+      email: newUser.email,
+      password: newUser.password
+    })
 
+    expect(res.status).to.equal(200)
+  })
+
+  after(async () => {
+    //  for the case of FK in tokens tbl
+
+    // find this user in the database
+    const user = await prisma.user.findUnique({
+      where: {
+        email: newUser.email
+      }
+    })
+
+    // delete user fk from token table
+    await prisma.token.delete({
+      where: {
+        user_id: user?.id
+      }
+    })
+
+    // then delete user
+    await prisma.user.delete({
+      where: {
+        email: newUser.email
+      }
+    })
+  })
+})
