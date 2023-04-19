@@ -6,6 +6,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
+import accomodationRouter from "./routes/accomodation.routes";
 import validateEnv from "./utils/validateEnv";
 
 validateEnv();
@@ -25,7 +26,10 @@ const swaggerDefinition = {
     version: "1.0.0",
     description: "Documentation for the API endpoints",
   },
-  servers: [{ url: "http://localhost:3000/api/v1/auth" }],
+  servers: [
+    { url: "http://localhost:3000/api/v1/auth" },
+    { url: "http://localhost:3000/api/v1/accomodation" },
+  ],
 };
 const options = {
   swaggerDefinition,
@@ -40,6 +44,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/accomodation", accomodationRouter);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {

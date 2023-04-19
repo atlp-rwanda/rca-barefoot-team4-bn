@@ -1,9 +1,10 @@
 import { type Request, type Response, type NextFunction } from "express";
+import { type ChangeRoleInput } from "../models/user.model";
 import { changeUserRole } from "../services/user.service";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const changeRoleHandler = async (
-  req: Request,
+  req: Request<any, ChangeRoleInput>,
   res: Response,
   next: NextFunction
 ) => {
@@ -22,9 +23,3 @@ export const changeRoleHandler = async (
     next(err);
   }
 };
-
-//       res.status(201).json({
-//         status: "Success",
-//         possibleValues:
-//           "SUPER_ADMIN,TRAVEL_ADMINISTRATOR,TRAVEL_TEAM_MEMBER, MANAGE, REQUESTER,USER",
-//       });

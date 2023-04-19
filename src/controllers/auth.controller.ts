@@ -230,7 +230,7 @@ export const resetPasswordHandler = async (
     await updateResetPassword({ token: reset.token }, { isUsed: true });
 
     res.send({
-      status: "success",
+      status: "Success",
       message: "Password reset successful",
     });
     // send email to user

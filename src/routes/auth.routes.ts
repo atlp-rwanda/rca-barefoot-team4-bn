@@ -135,7 +135,7 @@ import { restrictTo } from "../middlewares/restrictTo";
  * @swagger
  * /:
  *   delete:
- *     summary: Remove all the users
+ *     summary: Test removing all the users
  *     responses:
  *       200:
  *         description: All users removed successfully. Start over
