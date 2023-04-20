@@ -471,7 +471,7 @@
 
 "@sendgrid/mail@^7.7.0":
   version "7.7.0"
-  resolved "https://registry.npmjs.org/@sendgrid/mail/-/mail-7.7.0.tgz"
+  resolved "https://registry.yarnpkg.com/@sendgrid/mail/-/mail-7.7.0.tgz#aba09f5ce2e9d8ceee92284c3ea8b4a90b0e38fe"
   integrity sha512-5+nApPE9wINBvHSUxwOxkkQqM/IAAaBYoP9hw7WwgDNQPxraruVqHizeTitVtKGiqWCKm2mnjh4XGN3fvFLqaw==
   dependencies:
     "@sendgrid/client" "^7.7.0"
@@ -970,7 +970,7 @@
 
 "@types/sendgrid@^4.3.0":
   version "4.3.0"
-  resolved "https://registry.npmjs.org/@types/sendgrid/-/sendgrid-4.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/@types/sendgrid/-/sendgrid-4.3.0.tgz#1ec5fea60f02cf0690d96cd84411d006e97c21d5"
   integrity sha512-IllGHyMdT/2vNFGmaW7LdhiJmDJxwIbJcArclb9kPW+0FVOb8h3JmjP0FrnCx6anSigi8hBeDymBzWtNyfj+bw==
   dependencies:
     sendgrid "*"

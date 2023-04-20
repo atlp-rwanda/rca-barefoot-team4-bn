@@ -128,6 +128,32 @@ enum EFlightClass {
   BUSINESS
 }
 
+model accomodation {
+  id                   String @id @default(uuid())
+  accomodationFacility String
+  centerImage          String
+  numberOfRooms        Int
+  rooms                room[]
+
+  @@unique([accomodationFacility])
+}
+
+model room {
+  id             String       @id @default(uuid())
+  roomName       String       @unique
+  roomType       RoomType     @default(SINGLE)
+  Accomodation   accomodation @relation(fields: [accomodationId], references: [id])
+  accomodationId String       @default(uuid())
+}
+
+enum RoomType {
+  SINGLE
+  DOUBLE
+  DELUXE
+  PRESIDENTIAL
+  STUDIO
+}
+
 enum Role {
   SUPER_ADMIN
   TRAVEL_ADMIN

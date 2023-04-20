@@ -46,10 +46,16 @@ export const loginUserSchema = object({
   }),
 });
 
+export const changeRoleSchema = object({
+  body: object({
+    newRole: z.optional(z.nativeEnum(Role)),
+  }),
+});
+
 // export the inferred TS types of schemas with the typeOf<>
 export type RegisterUserInput = Omit<
   TypeOf<typeof registerUserSchema>["body"],
   "passwordConfirm"
 >;
-
 export type LoginUserInput = TypeOf<typeof loginUserSchema>["body"];
+export type ChangeRoleInput = TypeOf<typeof changeRoleSchema>["body"];
