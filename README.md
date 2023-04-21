@@ -1,6 +1,6 @@
 
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
-[![.github/workflows/main.yml](https://github.com/atlp-rwanda/rca-barefoot-team4-bn/actions/workflows/main.yml/badge.svg)](https://github.com/atlp-rwanda/rca-barefoot-team4-bn/actions/workflows/main.yml)
+[![CI](https://github.com/atlp-rwanda/rca-barefoot-team4-bn/actions/workflows/ci.yml/badge.svg)](https://github.com/atlp-rwanda/rca-barefoot-team4-bn/actions/workflows/ci.yml)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f88c3d6fc3ccca381c7f/maintainability)](https://codeclimate.com/github/atlp-rwanda/rca-barefoot-team4-bn/maintainability)
 
