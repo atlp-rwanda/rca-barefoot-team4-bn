@@ -18,7 +18,7 @@ export const changeRoleHandler = async (
   } catch (err: any) {
     res.status(400).json({
       status: "fail",
-      message: "Action failed.",
+      message: req.t('action_failed'),
     });
     next(err);
   }

@@ -1,0 +1,15 @@
+{
+    "welcome": "Welcome to Barefoot Nomad APIs",
+    "user_created": "User successfully created",
+    "email_exists": "Email already exist, please use another email address",
+    "loggin_success": "user successfully logged in",
+    "required_email": "Email is required",
+    "user_not_found": "User not found",
+    "reset_link": "Password reset link sent to your email",
+    "wrong": "Something went wrong",
+    "invalid_token": "Invalid or expired token",
+    "reset_password": "Password reset successful",
+    "delete_user": "User deleted",
+    "logout_success": "Logged out successfully!",
+    "action_failed": "Action failed"
+}
