@@ -3,8 +3,7 @@ import express, { type Request, type Response } from "express";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
-import i18next from "i18next";
-import Backend from "i18next-fs-backend";
+import i18next from "./middlewares/i18next";
 import middleware from "i18next-http-middleware";
 
 import authRouter from "./routes/auth.routes";
@@ -13,6 +12,7 @@ import accomodationRouter from "./routes/accomodation.routes";
 import airportRouter from "./routes/flight/airport.routes";
 import flightRouter from "./routes/flight/flight.routes";
 import validateEnv from "./utils/validateEnv";
+
 // import 
 
 validateEnv();
@@ -20,15 +20,6 @@ validateEnv();
 const app = express();
 // const prisma = new PrismaClient();
 
-i18next
-  .use(Backend)
-  .use(middleware.LanguageDetector)
-  .init({
-    fallbackLng: "en",
-    backend: {
-      loadPath: "./locales/{{lng}}/translation.json",
-    },
-  });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
