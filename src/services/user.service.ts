@@ -146,9 +146,17 @@ export const checkTokenExist = async (token: string) => {
   });
 };
 
+export const checkTokenExistByUserId = async (user_id: string):Promise<boolean> => {
+  return await prisma.token.findFirst({
+    where: {
+      user_id,
+    },
+  })?true:false;
+};
+
 export const saveToken = async (user_id: string, token: string) => {
   // first delete the old token and user record
-  await deleteTokenByUserId(user_id);
+  await checkTokenExistByUserId(user_id) &&  await deleteTokenByUserId(user_id);
   const savedToken = await prisma.token.create({
     data: {
       user_id,
