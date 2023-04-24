@@ -3,6 +3,8 @@ import express, { type Request, type Response } from "express";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
+import i18next from "./middlewares/i18next";
+import middleware from "i18next-http-middleware";
 
 import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
@@ -10,6 +12,7 @@ import accomodationRouter from "./routes/accomodation.routes";
 import airportRouter from "./routes/flight/airport.routes";
 import flightRouter from "./routes/flight/flight.routes";
 import validateEnv from "./utils/validateEnv";
+
 // import 
 
 validateEnv();
@@ -17,8 +20,10 @@ validateEnv();
 const app = express();
 // const prisma = new PrismaClient();
 
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(middleware.handle(i18next));
 
 const PORT = 3000;
 
@@ -41,7 +46,7 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Barefoot Nomad APIs").status(200);
+  res.send(req.t('welcome')).status(200);
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));

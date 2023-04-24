@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+
 import {
   type CookieOptions,
   type Request,
@@ -92,13 +93,14 @@ export const registerUserHandler = async (
         user,
         access_token: accessToken,
       },
+      message: req.t('user_created'),
     });
   } catch (err: any) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === "P2002") {
         return res.status(409).json({
           status: "fail",
-          message: "Email already exist, please use another email address",
+          message: req.t('email_exists'),
         });
       }
       next(err);
@@ -138,6 +140,7 @@ export const loginHandler = async (
     // save user token
     await saveToken(user.id, accessToken);
     res.status(200).json({
+      message: req.t('loggin_success'),
       status: "success",
       accessToken,
     });
@@ -156,7 +159,7 @@ export const forgotPasswordHandler = async (
     if (email === undefined) {
       res.status(400).send({
         status: "fail",
-        message: "Email is required",
+        message: req.t('required_email'),
       });
       return;
     }
@@ -165,7 +168,7 @@ export const forgotPasswordHandler = async (
     if (user === null) {
       res.status(404).send({
         status: "fail",
-        message: "User not found",
+        message: req.t('user_not_found'),
       });
       console.log("User not found");
       return;
@@ -188,12 +191,12 @@ export const forgotPasswordHandler = async (
 
     res.send({
       status: "success",
-      message: "Password reset link sent to your email",
+      message: req.t('reset_link'),
     });
   } catch (error: any) {
     res.status(500).send({
       status: "fail",
-      message: "Something went wrong",
+      message: req.t('wrong'),
     });
   }
 };
@@ -219,7 +222,7 @@ export const resetPasswordHandler = async (
     if (reset === null || reset.isUsed || reset.expiresAt < new Date()) {
       res.status(400).send({
         status: "fail",
-        message: "Invalid or expired token",
+        message: req.t('invalid_token'),
       });
       return;
     }
@@ -231,7 +234,7 @@ export const resetPasswordHandler = async (
 
     res.send({
       status: "Success",
-      message: "Password reset successful",
+      message: req.t('reset_password'),
     });
     // send email to user
     await sendEmail({
@@ -244,7 +247,7 @@ export const resetPasswordHandler = async (
     console.log(error);
     res.status(500).send({
       status: "fail",
-      message: "Something went wrong",
+      message: req.t('wrong'),
     });
   }
 };
@@ -255,7 +258,7 @@ export const deleteUsersHandler = async (
 ): Promise<void> => {
   await deleteUsers();
 
-  res.status(200).send("Done!");
+  res.status(200).send({message:req.t('delete_user')});
 };
 
 // Logout handler here
@@ -266,6 +269,6 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
 
   res.status(200).send({
     status: "success",
-    message: "Logged out successfully!",
+    message: req.t('logout_success'),
   });
 };

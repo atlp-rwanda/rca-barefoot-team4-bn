@@ -1,0 +1,16 @@
+{
+    "welcome":"Bienvenue dans les API Barefoot Nomad",
+    "user_created": "utilisateur créé avec succès",
+    "email_exists": "L'adresse e-mail existe déjà, veuillez utiliser une autre adresse e-mail",
+    "loggin_success": "utilisateur connecté avec succès",
+    "required_email": "L'e-mail est requis",
+    "user_not_found": "Utilisateur non trouvé",
+    "reset_link": "Lien de réinitialisation du mot de passe envoyé à votre adresse e-mail",
+    "wrong": "Quelque chose s'est mal passé",
+    "invalid_token":"Jeton invalide ou expiré",
+    "reset_password": "Réinitialisation du mot de passe réussie",
+    "delete_user":"Utilisateur supprimé",
+    "logout_success": "Déconnecté avec succès!",
+    "action_failed": "Action: échoué"
+
+}
