@@ -1,5 +1,6 @@
 import {
   PrismaClient,
+  type Role,
   type ResetPassword,
   type Prisma,
   type User,
@@ -34,7 +35,6 @@ export const findUniqueUser = async (
     select,
   })) as User;
 };
-
 export const signTokens = (user: Prisma.UserCreateInput): Tokens => {
   // 1. Create Session
   // redisClient.set(`${user.id}`, JSON.stringify(user), {
@@ -43,15 +43,29 @@ export const signTokens = (user: Prisma.UserCreateInput): Tokens => {
 
   // 2. Create Access and Refresh tokens
 
-  const accessToken = signJwt({ id: user.id }, "accessTokenPrivateKey", {
+  const accessToken = signJwt({ userId: user.id }, "accessTokenPrivateKey", {
     expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
   });
 
-  const refreshToken = signJwt({ id: user.id }, "refreshTokenPrivateKey", {
+  const refreshToken = signJwt({ userId: user.id }, "refreshTokenPrivateKey", {
     expiresIn: `${config.get<number>("refreshTokenExpiresIn")}m`,
   });
 
   return { accessToken, refreshToken };
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const changeUserRole = async (userId: string, theRole: Role) => {
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      role: theRole,
+    },
+  });
+
+  return updatedUser;
 };
 
 export const updateUser = async (
@@ -65,7 +79,6 @@ export const updateUser = async (
 };
 
 export const deleteUsers = async (): Promise<Prisma.BatchPayload> => {
-  console.log("deleting...");
   return await prisma.user.deleteMany();
 };
 
@@ -118,6 +131,14 @@ export const deleteToken = async (token: string) => {
   });
 };
 
+export const deleteTokenByUserId = async (user_id: string) => {
+  await prisma.token.delete({
+    where: {
+      user_id,
+    },
+  });
+};
+
 export const checkTokenExist = async (token: string) => {
   return await prisma.token.findFirst({
     where: {
@@ -126,13 +147,26 @@ export const checkTokenExist = async (token: string) => {
   });
 };
 
+export const checkTokenExistByUserId = async (user_id: string):Promise<boolean> => {
+  return await prisma.token.findFirst({
+    where: {
+      user_id,
+    },
+  })?true:false;
+};
+
 export const saveToken = async (user_id: string, token: string) => {
-  return await prisma.token.create({
+  // first delete the old token and user record
+  await checkTokenExistByUserId(user_id) &&  await deleteTokenByUserId(user_id);
+  const savedToken = await prisma.token.create({
+
     data: {
       user_id,
       token_value: token,
     },
   });
+
+  return savedToken;
 };
 
 export const getOne = async (id: string) => {
@@ -140,5 +174,5 @@ export const getOne = async (id: string) => {
     where: {
       id,
     },
-  });
+  }) as User;
 };

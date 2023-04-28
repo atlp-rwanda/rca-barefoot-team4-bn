@@ -12,5 +12,6 @@ export async function sendEmail(
     html: `<div style="font-size:17px;text-align:left;color:#181a19">${msg.message}</div>`,
   };
 
-  return await sendGrid.send(message);
+  const send = await sendGrid.send(message);
+  return send;
 }

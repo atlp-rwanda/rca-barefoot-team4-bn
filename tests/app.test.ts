@@ -2,16 +2,17 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import app from "../src/app";
 
-chai.use(chaiHttp);
 const expect = chai.expect;
+chai.use(chaiHttp);
 
-describe("GET /", () => {
-  it('should return "Welcome to Barefoot Nomad APIs"', (done) => {
+describe("Root Route", () => {
+  it("should return a welcome message on GET /", (done) => {
     chai
       .request(app)
       .get("/")
       .end((err, res) => {
-        expect(res.status).to.equal(200);
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
         expect(res.text).to.equal("Welcome to Barefoot Nomad APIs");
         done();
       });

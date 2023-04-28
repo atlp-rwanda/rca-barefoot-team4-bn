@@ -8,7 +8,14 @@ export function validateUserInput(body: object): Joi.ValidationResult<any> {
     passwordConfirm: Joi.ref("password"),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
-    role: Joi.string().valid("USER", "ADMIN"),
+    role: Joi.string().valid(
+      "SUPER_ADMIN",
+      "TRAVEL_ADMIN",
+      "TRAVEL_TEAM_MEMBER",
+      "MANAGER",
+      "REQUESTER",
+      "USER"
+    ),
     photo: Joi.string().allow(null),
   });
   return schema.validate(body);

@@ -2,7 +2,7 @@
 import express from "express";
 import { auth } from "../middlewares/auth";
 import {
-  deleteHandler,
+  deleteUsersHandler,
   forgotPasswordHandler,
   loginHandler,
   logout,
@@ -11,6 +11,9 @@ import {
 } from "../controllers/auth.controller";
 import { validate } from "../middlewares/validate";
 import { loginUserSchema, registerUserSchema } from "../models/user.model";
+import { deserializeUser } from "../middlewares/deserializeUser";
+import { requireUser } from "../middlewares/requireUser";
+import { restrictTo } from "../middlewares/restrictTo";
 
 /**
  * @swagger
@@ -31,17 +34,20 @@ import { loginUserSchema, registerUserSchema } from "../models/user.model";
  *         email:
  *           type: string
  *           format: email
- *         password:
- *           type: string
  *         role:
  *           type: string
  *           enum: [USER, ADMIN]
+ *         password:
+ *           type: string
+ *         passwordConfirm:
+ *           type: string
  *       example:
  *         firstName: John
  *         lastName: Doe
  *         email: johndoe@example.com
- *         password: mysecretpassword
  *         role: USER
+ *         password: mysecretpassword
+ *         passwordConfirm: mysecretpassword
  *     LoginUserInput:
  *       type: object
  *       required:
@@ -129,10 +135,10 @@ import { loginUserSchema, registerUserSchema } from "../models/user.model";
  * @swagger
  * /:
  *   delete:
- *     summary: Delete a user
+ *     summary: Test removing all the users
  *     responses:
  *       200:
- *         description: User deletion successful
+ *         description: All users removed successfully. Start over
  *       400:
  *         description: Bad request
  *       500:
@@ -186,7 +192,14 @@ const router = express.Router();
 router.post("/register", validate(registerUserSchema), registerUserHandler);
 router.post("/login", validate(loginUserSchema), loginHandler);
 router.post("/logout", auth, logout);
-router.delete("/", deleteHandler);
+router.delete(
+  "/",
+  deserializeUser,
+  requireUser,
+  restrictTo("SUPER_ADMIN", "TRAVEL_ADMINISTRATOR"),
+  deleteUsersHandler
+);
+router.post("/logout", auth, logout);
 router.post("/forgot-password", forgotPasswordHandler);
 router.post("/reset-password", resetPasswordHandler);
 

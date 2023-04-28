@@ -21,7 +21,7 @@ model User {
   lastName  String
   verified  Boolean @default(false)
   role      Role   @default(USER)
-  token Token?
+  token     Token?
 
   photo String? @default("default.png")
   // social Json?
@@ -29,6 +29,8 @@ model User {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   ResetPassword ResetPassword[]
+
+  flightBookings FlightBooking[]
 
   // other fields should be added as the project grows
   @@index([email])
@@ -49,19 +51,115 @@ model ResetPassword {
   @@map(name: "reset_password")
 }
 
-
 model Token {
-  id        String @id @default(uuid())
-  token_value  String @unique
-  user User @relation(fields: [user_id], references: [id])
-  user_id   String @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  token_value String   @unique
+  user        User     @relation(fields: [user_id], references: [id])
+  user_id     String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+   @@map(name: "tokens")
+}
 
+// booking models 
+
+model Airport {
+  id                String   @id @default(uuid())
+  name              String
+  code              String @unique
+  city              String
+  country           String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  flights_departing Flight[] @relation("departures")
+  flights_arriving  Flight[] @relation("arrivals")
+
+  @@map(name: "airports")
+}
+
+model Flight {
+  id                   String   @id @default(uuid())
+  airline              String   //TODO: build a schema for airlines, but later
+  departure_time       DateTime
+  arrival_time         DateTime
+  // fk
+  departure_airport    Airport  @relation("departures", fields: [departure_airport_id], references: [id])
+  departure_airport_id String
+  arrival_airport      Airport  @relation("arrivals", fields: [arrival_airport_id], references: [id])
+  arrival_airport_id   String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  flight_seat_prices FlightSeatPrice[]
+
+  @@map(name: "flights")
+}
+
+model FlightSeatPrice {
+  id            String       @id @default(uuid())
+  price         Float
+  // fk
+  flight        Flight       @relation(fields: [flight_id], references: [id])
+  flight_id     String
+  class         EFlightClass @default(ECONOMY)
+  numberofseats Int // will decrement
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  flightBookings FlightBooking[]
+
+  @@map(name: "flight_seat_prices")
+}
+
+model FlightBooking {
+  id                   String          @id @default(uuid())
+  // fk
+  user                 User            @relation(fields: [user_id], references: [id])
+  user_id              String
+  flight_seat_price    FlightSeatPrice @relation(fields: [flight_seat_price_id], references: [id])
+  flight_seat_price_id String
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+
+  @@map(name: "flight_bookings")
+}
+
+enum EFlightClass {
+  ECONOMY
+  BUSINESS
+}
+
+model accomodation {
+  id                   String @id @default(uuid())
+  accomodationFacility String
+  centerImage          String
+  numberOfRooms        Int
+  rooms                room[]
+
+  @@unique([accomodationFacility])
+}
+
+model room {
+  id             String       @id @default(uuid())
+  roomName       String       @unique
+  roomType       RoomType     @default(SINGLE)
+  Accomodation   accomodation @relation(fields: [accomodationId], references: [id])
+  accomodationId String       @default(uuid())
+}
+
+enum RoomType {
+  SINGLE
+  DOUBLE
+  DELUXE
+  PRESIDENTIAL
+  STUDIO
 }
 
 enum Role {
+  SUPER_ADMIN
+  TRAVEL_ADMIN
+  TRAVEL_TEAM_MEMBER
+  MANAGER
+  REQUESTER
   USER
-  ADMIN
 }
- 

@@ -54,3 +54,4 @@ export const auth = async (
     return response.status(500).send({ success: false, message: e.message });
   }
 };
+
