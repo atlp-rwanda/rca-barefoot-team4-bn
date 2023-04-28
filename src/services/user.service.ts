@@ -23,6 +23,7 @@ export const registerUser = async (
   return await prisma.user.create({
     data: input,
   });
+  // return user;
 };
 
 export const findUniqueUser = async (
@@ -158,6 +159,7 @@ export const saveToken = async (user_id: string, token: string) => {
   // first delete the old token and user record
   await checkTokenExistByUserId(user_id) &&  await deleteTokenByUserId(user_id);
   const savedToken = await prisma.token.create({
+
     data: {
       user_id,
       token_value: token,

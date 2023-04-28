@@ -191,6 +191,7 @@ const router = express.Router();
 
 router.post("/register", validate(registerUserSchema), registerUserHandler);
 router.post("/login", validate(loginUserSchema), loginHandler);
+router.post("/logout", auth, logout);
 router.delete(
   "/",
   deserializeUser,
@@ -198,7 +199,6 @@ router.delete(
   restrictTo("SUPER_ADMIN", "TRAVEL_ADMINISTRATOR"),
   deleteUsersHandler
 );
-router.delete("/", deleteUsersHandler);
 router.post("/logout", auth, logout);
 router.post("/forgot-password", forgotPasswordHandler);
 router.post("/reset-password", resetPasswordHandler);

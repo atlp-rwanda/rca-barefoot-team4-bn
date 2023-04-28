@@ -19,6 +19,7 @@ model User {
   password  String
   firstName String
   lastName  String
+  verified  Boolean @default(false)
   role      Role   @default(USER)
   token     Token?
 

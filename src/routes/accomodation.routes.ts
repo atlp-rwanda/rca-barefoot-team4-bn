@@ -70,6 +70,4 @@ router.use(requireUser);
 router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
 
 router.route("/").post(createAccomodationHandler);
-// router.route("/room").post(assignRoomsHandler);
-
 export default router;
