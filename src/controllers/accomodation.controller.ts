@@ -10,13 +10,24 @@ export const createAccomodationHandler = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { accomodationFacility, centerImage, numberOfRooms, rooms } =
-      req.body;
-
-    const accomodation = await makeAccomodation({
-      accomodationFacility,
+    const {
+      destinationName,
+      address,
+      contact,
+      description,
+      websiteUrl,
       centerImage,
       numberOfRooms,
+      rooms,
+    } = req.body;
+
+    const accomodation = await makeAccomodation({
+      destinationName,
+      address,
+      contact,
+      description,
+      websiteUrl,
+      centerImage,
       rooms: {
         createMany: {
           data: [...rooms],
