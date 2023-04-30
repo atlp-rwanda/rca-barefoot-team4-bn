@@ -1,7 +1,6 @@
 import { type Request, type Response, type NextFunction } from "express";
 import {
   makeAccomodation,
-  // createRoom,
 } from "../services/accomodation.service";
 
 export const createAccomodationHandler = async (
@@ -17,7 +16,6 @@ export const createAccomodationHandler = async (
       description,
       websiteUrl,
       centerImage,
-      numberOfRooms,
       rooms,
     } = req.body;
 
