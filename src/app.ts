@@ -1,5 +1,6 @@
 import "dotenv/config";
-import express, { type Request, type Response } from "express";
+import express from "express";
+import { RequestHandler } from "express";
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
@@ -45,9 +46,14 @@ const options = {
 };
 const swaggerSpec = swaggerJSDoc(options);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send(req.t('welcome')).status(200);
-});
+// app.get("/", (req: Request, res: Response) => {
+//   res.send(req.t("welcome")).status(200);
+// });
+const handler: RequestHandler = (req, res) => {
+  res.send(req.t("welcome")).status(200);
+};
+
+app.get("/", handler);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/auth", authRouter);

@@ -174,3 +174,24 @@ export const getOne = async (id: string) => {
     },
   }) as User;
 };
+export const getAllUsersService = async (): Promise<User[]> => {
+  return await prisma.user.findMany();
+};
+
+export const getUserbyId = async (
+  where: Prisma.UserWhereUniqueInput
+): Promise<User | null> => {
+  return await prisma.user.findUnique({
+    where,
+  });
+};
+
+export const updateUserProfileService = async (
+  where: Prisma.UserWhereUniqueInput,
+  data: Prisma.UserUpdateInput
+): Promise<User> => {
+  return await prisma.user.update({
+    where,
+    data,
+  });
+};
