@@ -21,10 +21,10 @@ validateEnv();
 const app = express();
 // const prisma = new PrismaClient();
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(middleware.handle(i18next));
-app.use(cors())
 
 const PORT = 3000;
 
