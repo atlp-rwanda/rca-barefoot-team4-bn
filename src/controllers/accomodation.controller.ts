@@ -1,7 +1,6 @@
 import { type Request, type Response, type NextFunction } from "express";
 import {
   makeAccomodation,
-  // createRoom,
 } from "../services/accomodation.service";
 
 export const createAccomodationHandler = async (
@@ -10,13 +9,23 @@ export const createAccomodationHandler = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { accomodationFacility, centerImage, numberOfRooms, rooms } =
-      req.body;
+    const {
+      destinationName,
+      address,
+      contact,
+      description,
+      websiteUrl,
+      centerImage,
+      rooms,
+    } = req.body;
 
     const accomodation = await makeAccomodation({
-      accomodationFacility,
+      destinationName,
+      address,
+      contact,
+      description,
+      websiteUrl,
       centerImage,
-      numberOfRooms,
       rooms: {
         createMany: {
           data: [...rooms],

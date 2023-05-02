@@ -15,32 +15,43 @@ const router = express.Router();
  *     accomodationInput:
  *       type: object
  *       required:
- *         - accomodationFacility
+ *         - destinationName
+ *         - address
+ *         - contact
+ *         - description
  *         - centerImage
- *         - numberOfRooms
  *         - rooms
  *       properties:
- *         accomodationFacility:
+ *         destinationName:
+ *           type: string
+ *         address:
+ *           type: string
+ *         contact:
+ *           type: string
+ *         description:
  *           type: string
  *         centerImage:
  *           type: string
- *         numberOfRooms:
- *           type: number
  *         rooms:
  *           type: array
  *       example:
- *         accomodationFacility: "Radisson blue hotel"
- *         centerImage: radisson.png
- *         numberOfRooms: 2
+ *         destinationName: Radison hotel
+ *         address: KN 42 St.
+ *         contact: ++250780474209
+ *         description: The best hotel in the city
+ *         centerImage: radison.png
+ *         websiteUrl: https://radisonblue.com
  *         rooms: [
  *                 {
- *                  roomName: room 1,
- *                  roomType: DELUXE,
+ *                  roomName: PRESIDENTIAL,
+ *                  roomAmount: 500000,
+ *                  numberOfRooms: 10,
  *                 },
  *                 {
- *                  roomName: room 2,
- *                  roomType: DELUXE,
- *                 }
+ *                  roomName: DELUXE,
+ *                  roomAmount: 700000,
+ *                  numberOfRooms: 20,
+ *                 },
  *                ]
  */
 
@@ -70,6 +81,5 @@ router.use(requireUser);
 router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
 
 router.route("/").post(createAccomodationHandler);
-// router.route("/room").post(assignRoomsHandler);
 
 export default router;
