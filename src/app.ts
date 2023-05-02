@@ -13,13 +13,12 @@ import airportRouter from "./routes/flight/airport.routes";
 import flightRouter from "./routes/flight/flight.routes";
 import validateEnv from "./utils/validateEnv";
 
-// import 
+// import
 
 validateEnv();
 
 const app = express();
 // const prisma = new PrismaClient();
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -46,15 +45,15 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send(req.t('welcome')).status(200);
+  res.send(req.t("welcome")).status(200);
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/accomodation", accomodationRouter);
-app.use("/api/v1/airport",airportRouter);
-app.use("/api/v1/flight",flightRouter);
+app.use("/api/v1/airport", airportRouter);
+app.use("/api/v1/flight", flightRouter);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
