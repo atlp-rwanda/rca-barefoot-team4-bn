@@ -1,7 +1,6 @@
 import { type Request, type Response, type NextFunction } from "express";
-import {
-  makeAccomodation,
-} from "../services/accomodation.service";
+import { makeAccomodation } from "../services/accomodation.service";
+import cloudinary from "../utils/cloudinary";
 
 export const createAccomodationHandler = async (
   req: Request<unknown, unknown>,
@@ -19,13 +18,17 @@ export const createAccomodationHandler = async (
       rooms,
     } = req.body;
 
+    const theResult = await cloudinary.uploader.upload(centerImage[0], {
+      public_id: `bn-image-store/${req.body.destinationName}`,
+    });
+
     const accomodation = await makeAccomodation({
       destinationName,
       address,
       contact,
       description,
       websiteUrl,
-      centerImage,
+      centerImage: theResult.url,
       rooms: {
         createMany: {
           data: [...rooms],

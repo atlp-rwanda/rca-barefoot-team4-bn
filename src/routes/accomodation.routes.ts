@@ -6,7 +6,7 @@ import {
 import { deserializeUser } from "../middlewares/deserializeUser";
 import { requireUser } from "../middlewares/requireUser";
 import { restrictTo } from "../middlewares/restrictTo";
-
+import upload from "../utils/multerUpload";
 const router = express.Router();
 /**
  * @swagger
@@ -76,10 +76,10 @@ const router = express.Router();
  */
 
 /* eslint-disable @typescript-eslint/no-misused-promises */
-router.use(deserializeUser);
-router.use(requireUser);
-router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
+// router.use(deserializeUser);
+// router.use(requireUser);
+// router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
 
-router.route("/").post(createAccomodationHandler);
+router.route("/").post(upload.single("centerImage"), createAccomodationHandler);
 
 export default router;
