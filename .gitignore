@@ -275,6 +275,7 @@ FakesAssemblies/
 .ntvs_analysis.dat
 .yarn/
 node_modules/
+prisma/migrations
 dist/
 .nyc_output/
 .env

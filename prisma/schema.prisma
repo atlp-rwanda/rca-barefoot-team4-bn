@@ -57,7 +57,8 @@ model Token {
   user_id     String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-   @@map(name: "tokens")
+
+  @@map(name: "tokens")
 }
 
 // booking models 
@@ -65,7 +66,7 @@ model Token {
 model Airport {
   id                String   @id @default(uuid())
   name              String
-  code              String @unique
+  code              String   @unique
   city              String
   country           String
   createdAt         DateTime @default(now())
@@ -78,7 +79,7 @@ model Airport {
 
 model Flight {
   id                   String   @id @default(uuid())
-  airline              String   //TODO: build a schema for airlines, but later
+  airline              String //TODO: build a schema for airlines, but later
   departure_time       DateTime
   arrival_time         DateTime
   // fk
@@ -129,19 +130,24 @@ enum EFlightClass {
 }
 
 model accomodation {
-  id                   String @id @default(uuid())
-  accomodationFacility String
-  centerImage          String
-  numberOfRooms        Int
-  rooms                room[]
+  id              String @id @default(uuid())
+  destinationName String
+  address         String
+  contact         String
+  description     String
+  websiteUrl      String?
+  centerImage     String
+  rooms           room[]
 
-  @@unique([accomodationFacility])
+  @@unique([destinationName])
 }
 
 model room {
-  id             String       @id @default(uuid())
-  roomName       String       @unique
-  roomType       RoomType     @default(SINGLE)
+  id            String   @id @default(uuid())
+  roomName      String   @unique
+  roomAmount    Int
+  // roomType      RoomType @default(SINGLE)
+  numberOfRooms Int
   Accomodation   accomodation @relation(fields: [accomodationId], references: [id])
   accomodationId String       @default(uuid())
 }
