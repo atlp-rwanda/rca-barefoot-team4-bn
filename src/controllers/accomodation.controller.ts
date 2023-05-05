@@ -9,9 +9,7 @@ export const createAccomodationHandler = async (
   res: Response,
   next:NextFunction
 )=> {
-  try {
-    // console.log(req.body);
-        
+  try {        
     const {
       destinationName,
       address,
