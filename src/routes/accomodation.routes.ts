@@ -76,9 +76,9 @@ const router = express.Router();
  */
 
 /* eslint-disable @typescript-eslint/no-misused-promises */
-// router.use(deserializeUser);
-// router.use(requireUser);
-// router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
+router.use(deserializeUser);
+router.use(requireUser);
+router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
 
 router.route("/").post(upload.single("centerImage"), createAccomodationHandler);
 

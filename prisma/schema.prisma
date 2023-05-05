@@ -144,7 +144,7 @@ model accomodation {
 
 model room {
   id            String   @id @default(uuid())
-  roomName      String   @unique
+  roomName      String
   roomAmount    Int
   // roomType      RoomType @default(SINGLE)
   numberOfRooms Int
