@@ -1,6 +1,6 @@
 import { type Request, type Response, type NextFunction } from "express";
 import { type ChangeRoleInput } from "../models/user.model";
-import { changeUserRole, getAllUsersService, updateUserProfileService, getUserbyId } from "../services/user.service";
+import { changeUserRole, getAllUsersService, updateUserProfileService, getUserbyId, findUniqueUser } from "../services/user.service";
 import bcrypt from "bcryptjs";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -46,12 +46,12 @@ export const getAllUsers = async (res: Response): Promise<void> => {
 };
 
 export const getUserId = async (req: Request, res: Response): Promise<void> => {
-  try {
+  try {    
+    const user = await findUniqueUser({id:res.locals.user.id});
     
-    const users = await getUserbyId({ id: req.params.id });
     res
       .status(200)
-      .json({ message: "Users retrieved successfully", payload: users });
+      .json({ message: "Users retrieved successfully", user });
   } catch (error: any) {
     res.status(500).send({
       status: "fail",

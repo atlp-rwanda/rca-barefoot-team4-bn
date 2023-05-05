@@ -3,7 +3,12 @@ import express from "express";
 import { deserializeUser } from "../middlewares/deserializeUser";
 import { requireUser } from "../middlewares/requireUser";
 import { restrictTo } from "../middlewares/restrictTo";
-import { getAllUsers,getUserId,updateUserProfile,changeRoleHandler } from "../controllers/user.controller";
+import {
+  getAllUsers,
+  getUserId,
+  updateUserProfile,
+  changeRoleHandler,
+} from "../controllers/user.controller";
 
 const router = express.Router();
 
@@ -108,7 +113,7 @@ Date: April 5, 2023
  *       500:
  *         description: Internal Server Error
  */
-router.get("/get-user/:id", getUserId);
+router.get("/get-user/", deserializeUser, requireUser, getUserId);
 
 /**
  * @swagger
