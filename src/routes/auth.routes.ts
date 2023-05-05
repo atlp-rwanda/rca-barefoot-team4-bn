@@ -93,7 +93,7 @@ import { restrictTo } from "../middlewares/restrictTo";
 
 /**
  * @swagger
- * /register:
+ * /auth/register:
  *   post:
  *     summary: Register a new user
  *     requestBody:
@@ -113,7 +113,7 @@ import { restrictTo } from "../middlewares/restrictTo";
 
 /**
  * @swagger
- * /login:
+ * /auth/login:
  *   post:
  *     summary: Login a user
  *     requestBody:
@@ -133,7 +133,7 @@ import { restrictTo } from "../middlewares/restrictTo";
 
 /**
  * @swagger
- * /:
+ * /auth/:
  *   delete:
  *     summary: Test removing all the users
  *     responses:
@@ -147,7 +147,7 @@ import { restrictTo } from "../middlewares/restrictTo";
 
 /**
  * @swagger
- * /forgot-password:
+ * /auth/forgot-password:
  *   post:
  *     summary: Request password reset
  *     requestBody:
@@ -169,7 +169,7 @@ import { restrictTo } from "../middlewares/restrictTo";
 
 /**
  * @swagger
- * /reset-password:
+ * /auth/reset-password:
  *   post:
  *     summary: Reset password
  *     requestBody:

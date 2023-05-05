@@ -27,7 +27,7 @@ export const registerUser = async (
 
 export const findUniqueUser = async (
   where: Prisma.UserWhereUniqueInput,
-  select?: Prisma.UserSelect
+  select?: Prisma.UserSelect,
 ): Promise<User> => {
   return (await prisma.user.findUnique({
     where,
@@ -35,13 +35,6 @@ export const findUniqueUser = async (
   })) as User;
 };
 export const signTokens = (user: Prisma.UserCreateInput): Tokens => {
-  // 1. Create Session
-  // redisClient.set(`${user.id}`, JSON.stringify(user), {
-  //   EX: config.get<number>('redisCacheExpiresIn') * 60,
-  // });
-
-  // 2. Create Access and Refresh tokens
-
   const accessToken = signJwt({ userId: user.id }, "accessTokenPrivateKey", {
     expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
   });
@@ -173,4 +166,25 @@ export const getOne = async (id: string) => {
       id,
     },
   }) as User;
+};
+export const getAllUsersService = async (): Promise<User[]> => {
+  return await prisma.user.findMany();
+};
+
+export const getUserbyId = async (
+  where: Prisma.UserWhereUniqueInput
+): Promise<User | null> => {
+  return await prisma.user.findUnique({
+    where,
+  });
+};
+
+export const updateUserProfileService = async (
+  where: Prisma.UserWhereUniqueInput,
+  data: Prisma.UserUpdateInput
+): Promise<User> => {
+  return await prisma.user.update({
+    where,
+    data,
+  });
 };
