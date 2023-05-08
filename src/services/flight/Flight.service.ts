@@ -280,7 +280,6 @@ export class FlightService {
         }
       })
 
-      console.log('data',data)
 
       return {
         statusCode: 200,
