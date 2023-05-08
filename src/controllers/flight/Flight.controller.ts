@@ -137,16 +137,15 @@ export class FlightController {
   async getAllByTimeAndLocation(req: Request, res: Response) {
     try {
 
-      let departureTime:Date = new Date(req.body.departure_time) as Date
+      const departureTime:Date = new Date(req.body.departure_time) as Date
       const formattedDepartureTime:string = departureTime.toISOString()
 
-      let arrivalTime:Date = new Date(req.body.arrival_time) as Date
+      const arrivalTime:Date = new Date(req.body.arrival_time) as Date
       const formattedArrivalTime:string = arrivalTime.toISOString()
 
       const departureLocation = req.body.departure_location as string
       const arrivalLocation = req.body.arrival_location as string
 
-      console.log(formattedDepartureTime, formattedArrivalTime, departureLocation, arrivalLocation)
      
      
       const reply = await flightService.getAllByTimeAndLocation(
