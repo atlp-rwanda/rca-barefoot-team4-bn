@@ -13,6 +13,7 @@ router.put('/:id', flightController.updateFlight)
 
 router.get('/all/:from/:to', flightController.getAllByAirports)
 router.get('/all/by-time', flightController.getAllByTime)
+router.post('/all/by-time-location', flightController.getAllByTimeAndLocation) //TODO: to change to GET later
 router.get('/all/by-airline', flightController.getAllByAirline)
 router.get('/all/available', flightController.getAllAvailableFlights)
 router.get('/bookings/:id', flightController.getBookingsByUser)
