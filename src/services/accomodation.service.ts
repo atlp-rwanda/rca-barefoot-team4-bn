@@ -11,3 +11,8 @@ export const makeAccomodation = async (
 
   return newData;
 };
+
+export const findAccomodations = async (field: any) => {
+    const results = await prisma.accomodation.findMany({where:{destinationName: { contains: field, mode: 'insensitive' }}});
+  return results;
+};

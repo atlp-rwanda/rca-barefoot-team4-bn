@@ -1,7 +1,7 @@
 import express from "express";
 import {
   // assignRoomsHandler,
-  createAccomodationHandler,
+  createAccomodationHandler, getAccomodations,
 } from "../controllers/accomodation.controller";
 import { deserializeUser } from "../middlewares/deserializeUser";
 import { requireUser } from "../middlewares/requireUser";
@@ -76,6 +76,8 @@ const router = express.Router();
  */
 
 /* eslint-disable @typescript-eslint/no-misused-promises */
+
+router.route('/').get(getAccomodations);
 router.use(deserializeUser);
 router.use(requireUser);
 router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
