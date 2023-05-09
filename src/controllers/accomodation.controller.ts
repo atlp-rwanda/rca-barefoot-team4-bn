@@ -69,7 +69,7 @@ export const getAccomodations = async (
 ) => {
   // eslint-disable-next-line no-useless-catch
   try {
-    const accomodations = await findAccomodations(req.query.field);
+    const accomodations = await findAccomodations(req.query.term);
     return res.status(200).json({
       status: "success",
       accomodations,
