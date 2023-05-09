@@ -217,6 +217,80 @@ export class FlightService {
     }
   }
 
+
+    async getAllByTimeAndLocation(
+      departure_location:string,
+      arrival_location:string,
+      departureTime: string, arrivalTime: string) {
+    try {
+
+      const departureLocation = await prisma.airport.findMany({  
+        where: {
+          city:{
+            contains:departure_location,
+            mode: 'insensitive'
+          }
+        }
+      })
+
+      const arrivalLocation = await prisma.airport.findMany({  
+        where: {
+          city:{
+            contains:arrival_location,
+            mode: 'insensitive'
+          }
+        }
+      })
+
+      const departureLocationIds:string[]=[]
+
+      departureLocation.forEach((loc)=>{
+        departureLocationIds.push(loc.id)
+      })
+
+      const arrivalLocationIds:string[]=[]
+      arrivalLocation.forEach((loc)=>{
+        arrivalLocationIds.push(loc.id)
+      })
+
+      const formattedDepartureDate = new Date(departureTime)
+      const formattedArrivalDate = new Date(arrivalTime)
+
+
+      const data = await prisma.flight.findMany({
+        where: {
+
+          departure_airport_id:{
+            in: departureLocationIds
+          },
+          arrival_airport_id:{
+            in: arrivalLocationIds
+          },
+          departure_time: {
+            gte: formattedDepartureDate
+          },
+          arrival_time: {
+            lte: formattedArrivalDate
+          }
+        },
+        include: {
+          flight_seat_prices: true,
+          departure_airport: true,
+          arrival_airport: true
+        }
+      })
+
+
+      return {
+        statusCode: 200,
+        message: "Flight retrieved successfully",
+        data: data
+      }
+    } catch (err: unknown) {
+      throw new ApiError(false, getStatusCode(err), getMessage(err))
+    }
+  }
+
   // get all by airline
   async getAllByAirline(airline: string) {
     try {
