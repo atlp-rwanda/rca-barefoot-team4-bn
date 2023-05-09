@@ -134,6 +134,42 @@ export class FlightController {
 
   }
 
+  async getAllByTimeAndLocation(req: Request, res: Response) {
+    try {
+
+      const departureTime:Date = new Date(req.body.departure_time) as Date
+      const formattedDepartureTime:string = departureTime.toISOString()
+
+      const arrivalTime:Date = new Date(req.body.arrival_time) as Date
+      const formattedArrivalTime:string = arrivalTime.toISOString()
+
+      const departureLocation = req.body.departure_location as string
+      const arrivalLocation = req.body.arrival_location as string
+
+     
+     
+      const reply = await flightService.getAllByTimeAndLocation(
+        departureLocation,
+        arrivalLocation,
+        formattedDepartureTime,
+        formattedArrivalTime
+        )
+      return res.status(reply.statusCode).send({
+        success: true,
+        message: reply.message,
+        data: reply.data
+      })
+    } catch (err: unknown) {
+      return res.status(getStatusCode(err)).send({
+        success: false,
+        message: getMessage(err)
+      })
+    }
+
+  }
+
+  
+
   async getAllByAirline(req: Request, res: Response) {
     try {
       const airline = req.body.airline as string
