@@ -12,7 +12,7 @@ import userRouter from "./routes/user.routes";
 import accomodationRouter from "./routes/accomodation.routes";
 import airportRouter from "./routes/flight/airport.routes";
 import flightRouter from "./routes/flight/flight.routes";
-// import paymentRouter from "./routes/payment.routes";
+import paymentRouter from "./routes/payment.routes";
 import validateEnv from "./utils/validateEnv";
 
 // import
@@ -57,7 +57,7 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/accomodation", accomodationRouter);
 app.use("/api/v1/airport", airportRouter);
 app.use("/api/v1/flight", flightRouter);
-// app.use("/api/v1/payment", paymentRouter);
+app.use("/api/v1/payment", paymentRouter);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
