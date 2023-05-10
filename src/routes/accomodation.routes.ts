@@ -2,12 +2,21 @@ import express from "express";
 import {
   // assignRoomsHandler,
   createAccomodationHandler,
+  getAccomodations,
+  // getOneAccomodation,
 } from "../controllers/accomodation.controller";
 import { deserializeUser } from "../middlewares/deserializeUser";
 import { requireUser } from "../middlewares/requireUser";
 import { restrictTo } from "../middlewares/restrictTo";
 import upload from "../utils/multerUpload";
 const router = express.Router();
+
+router.route("/").get(getAccomodations);
+// router.route("/:id").get(getOneAccomodation);
+router.use(deserializeUser);
+router.use(requireUser);
+router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
+
 /**
  * @swagger
  * components:
@@ -76,10 +85,6 @@ const router = express.Router();
  */
 
 /* eslint-disable @typescript-eslint/no-misused-promises */
-router.use(deserializeUser);
-router.use(requireUser);
-router.use(restrictTo("SUPER_ADMIN", "TRAVEL_ADMIN"));
-
 router.route("/").post(upload.single("centerImage"), createAccomodationHandler);
 
 export default router;
