@@ -1,6 +1,7 @@
 import { type Request, type Response, type NextFunction } from "express";
 import {
   findAccomodations,
+  findOneAccomodation,
   makeAccomodation,
 } from "../services/accomodation.service";
 import cloudinary from "../utils/cloudinary";
@@ -69,6 +70,7 @@ export const getAccomodations = async (
 ) => {
   // eslint-disable-next-line no-useless-catch
   try {
+  console.log(req.query);
     const accomodations = await findAccomodations(req.query.term);
     return res.status(200).json({
       status: "success",
